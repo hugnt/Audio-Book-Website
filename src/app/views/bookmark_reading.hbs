@@ -1,0 +1,65 @@
+<head>
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/bookmark_reading.css">
+
+    <!-- font-awesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <link rel="shortcut icon" type="image/png" href="/img/icon/open-book4.png"/>
+</head>
+
+{{> header}}
+
+    <section class="section-main">
+        <div class="container">
+            <div class="support-box">
+                <div class="left-bar">
+                    <button class="goHome"><i class="fa-solid fa-book-open"></i>Go to the library</button>
+                </div>
+                <span class="big-main-title">You are reading</span>
+                <div class="img-box">
+                    <img src="/img/ADVENTURES_OF_HUCKLEBERRY_FINN-2.jpg" alt="" class="w-100">
+                </div>
+                <div class="desc">
+                    <span class="book-name">The Root Way</span>
+                    <span class="author d-block">Mark Twain</span>
+                    <span class="n_pages d-block">Pages: 150</span>
+                    
+                </div>
+             
+                <div class="note">
+                    <span><i class="fa-solid fa-bookmark"></i>Book Mark</span>
+                    <div class="mark">
+                        <label for="">Page</label>
+                        <input type="number">
+                    </div>
+                    <div class="note_text">
+                        <label for="" class="d-block">Note content</label>
+                        <textarea name="" id="" cols="20" rows="5"></textarea>
+                    </div>
+                    <button>Save</button>
+                </div>
+                <div class="btn-action">
+                    <button class="audio"><i class="fa-solid fa-file-audio"></i>Audio book</button>
+                    <button><i class="fa-solid fa-plus"></i>Add to my list</button>
+                    <button><i class="fa-solid fa-cart-plus"></i>Buy this book</button>
+                </div>
+            </div>
+            <iframe src="../pdf-flipbook/index.html" frameborder="0"></iframe>
+        </div>
+    </section>
+
+{{> footer}}
+
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"
+        integrity="sha512-AODL7idgffQeNsYdTzut09nz9AINcjhj4jHD72HcLirsidbC8tz+dof7gceOCQD8WskeuRFfJ9CsgZTHlMiOYg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/layout.js" type="module"></script>
+    <script src="/js/bookmark_reading.js" type="module"></script>

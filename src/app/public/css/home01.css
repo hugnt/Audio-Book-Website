@@ -1,0 +1,331 @@
+.back {
+  background-image: url("../images/home01/png/1.png");
+  background-repeat: no-repeat;
+  background-position-y: -10rem;
+  background-position-x: center;
+  background-size: 75rem; }
+
+/*Section*/
+section .container {
+  /* border: 1px solid #fff; */
+  margin: 2rem auto;
+  display: flex; }
+
+/*Left*/
+.container .left {
+  width: 9%;
+  height: 0rem;
+  border: 1px solid #fff; }
+
+.container img {
+  z-index: -999;
+  width: 37.5rem; }
+
+.left .authors {
+  margin-left: -1.5rem; }
+
+.active-img {
+  filter: brightness(1) !important; }
+
+.active-span {
+  display: block !important; }
+
+.left .authors .author-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: .3s linear; }
+
+.author-item img {
+  width: 3.75rem;
+  border-radius: 11.25%;
+  margin-left: 5.25rem;
+  margin-top: 1.5rem;
+  filter: brightness(50%); }
+
+.author-item:hover span {
+  display: block; }
+
+.author-item span {
+  padding-top: 1.5rem;
+  padding-left: 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  display: none; }
+
+/*Right*/
+.container .right {
+  margin-left: 1rem;
+  display: flex; }
+
+.right h1 {
+  margin-top: 82.5;
+  font-size: 5rem; }
+
+.title-author {
+  margin-left: 4.5rem;
+  margin-top: 15.75rem;
+  width: 43.5rem;
+  height: 18.75rem;
+  animation-name: moveOnLeft;
+  animation-duration: 5s;
+  border: 1px solid #fff; }
+
+@keyframes moveOnLeft {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0; }
+  50% {
+    transform: translateX(-15px);
+    opacity: 0.5; }
+  100% {
+    transform: translateX(0px); } }
+
+.title-author h1 {
+  cursor: pointer;
+  margin-top: -0rem;
+  font-size: 5rem;
+  font-weight: 550; }
+
+.intro {
+  display: flex; }
+
+.intro .born {
+  line-height: 1.875rem; }
+
+.intro .died {
+  line-height: 1.875rem; }
+
+.intro .born span:first-child {
+  color: #808080;
+  font-size: 0.6rem; }
+
+.born h2 {
+  font-size: 2.25rem;
+  font-weight: 500; }
+
+.born span:last-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #808080; }
+
+.border {
+  margin-right: 1.5rem;
+  margin-bottom: 2.625rem;
+  margin-left: 1.5rem;
+  width: 2.25rem;
+  border-bottom: 1px solid #fff; }
+
+.intro .died span:first-child {
+  color: #808080;
+  font-size: 0.6rem; }
+
+.died h2 {
+  font-size: 2.25rem;
+  font-weight: 500; }
+
+.died span:last-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #808080; }
+
+.end-right {
+  position: relative;
+  display: flex;
+  margin-left: 22.5rem;
+  width: 24.75rem;
+  border: 1px solid #fff; }
+
+.reader {
+  margin-top: 1.5rem;
+  margin-left: 10.5rem;
+  position: absolute;
+  border: 1px solid #fff;
+  width: 3.75rem;
+  height: 15rem; }
+
+.reader .title-reader {
+  display: flex;
+  align-items: center;
+  transform: rotate(90deg);
+  margin-left: 0.5rem;
+  margin-top: -2rem;
+  position: absolute;
+  width: 75%;
+  height: 3.75rem;
+  border: 1px solid #fff; }
+
+.reader .title-reader span {
+  color: #808080;
+  font-size: 0.75rem;
+  font-weight: 500; }
+
+.reader .img {
+  border: 1px solid #fff;
+  margin-left: 0.75rem;
+  margin-top: 2rem; }
+
+.title-img {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: .5s linear; }
+
+.title-img span {
+  cursor: pointer;
+  display: none;
+  color: #808080;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 0.75rem;
+  transition: .3s linear; }
+
+.title-img:hover span {
+  cursor: pointer;
+  display: flex; }
+
+.title-img span:active {
+  cursor: pointer;
+  color: white !important;
+  transform: translateX(1.5rem); }
+
+.reader img {
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  margin-top: 0.75rem; }
+
+.books {
+  margin-left: 3.5rem;
+  margin-top: 17.75rem;
+  border: 1px solid #fff;
+  width: 100%;
+  position: relative; }
+
+.book::-webkit-scrollbar {
+  display: none; }
+
+.book {
+  /* padding-left: 3rem; */
+  /* margin-left: 1rem; */
+  /* padding-top: 1.6rem; */
+  margin-top: -0.75rem;
+  /* position: absolute; */
+  height: 100%;
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  border: 1px solid #fff; }
+
+.arrow {
+  display: flex;
+  border: 1px solid #fff;
+  height: 1.125rem;
+  justify-content: end;
+  margin-bottom: 0.75rem; }
+
+.bi:hover {
+  color: white;
+  cursor: pointer; }
+
+.book-item {
+  cursor: pointer;
+  margin-top: 0.975rem;
+  margin-left: 1.875rem;
+  display: block;
+  transition: .1s linear;
+  animation-name: moveDown;
+  animation-duration: 5s; }
+
+@keyframes moveDown {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); }
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px); }
+  100% {
+    transform: translateY(0px); } }
+
+.book-item img:active {
+  transform: scale(0.9) !important; }
+
+.book-item img:hover {
+  transform: translateY(-15px); }
+
+.book-item img {
+  display: block;
+  border-radius: 5%;
+  width: 8rem;
+  height: 12.75rem;
+  box-shadow: 5px 8px #fff;
+  margin-bottom: 7.5px;
+  transition: .3s linear; }
+
+.book-item .book-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500; }
+
+.rate {
+  color: white;
+  font-size: 0.75rem !important; }
+
+/*Timeline*/
+.timeline ul {
+  position: relative;
+  border-bottom: 1px solid rgba(120, 116, 116, 0.8);
+  margin-left: -90.75rem;
+  margin-top: 37.5rem;
+  border: 1px solid #fff;
+  display: flex;
+  animation-name: time; }
+
+.timeline ul::before {
+  position: absolute;
+  transform: rotate(-90deg);
+  content: '';
+  width: 3rem;
+  height: 1.5rem;
+  /* as the half of the width */
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(139, 133, 133, 0.3));
+  border-top-left-radius: 110px;
+  /* 100px of height + 10px of border */
+  border-top-right-radius: 110px;
+  /* 100px of height + 10px of border */
+  /* border: 1px solid white; */
+  border-bottom: 0;
+  margin-left: -2.25rem;
+  margin-top: 1.5rem; }
+
+.timeline ul li {
+  width: 5.95rem;
+  border: 1px solid #fff;
+  margin-bottom: 1.5rem;
+  margin-left: 9.75rem;
+  position: relative;
+  font-weight: 500;
+  font-size: 0.75rem;
+  transition: .3s linear; }
+
+.timeline ul li span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #808080;
+  margin-bottom: -2rem; }
+
+.timeline ul li span:hover {
+  cursor: pointer;
+  color: white; }
+
+.timeline ul li:active {
+  cursor: pointer;
+  transform: scale(1.2); }
+
+.timeline ul li span::before {
+  color: #787474;
+  content: '|';
+  position: absolute;
+  font-size: 1.5rem;
+  margin-left: 30%;
+  margin-top: 1.5rem; }

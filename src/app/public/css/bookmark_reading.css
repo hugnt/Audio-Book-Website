@@ -1,0 +1,107 @@
+.section-main .container {
+  display: flex;
+  justify-content: space-between; }
+
+iframe {
+  /* height: 100%; */
+  width: 70%; }
+
+.left-bar {
+  margin: 2rem 0;
+  text-align: center; }
+
+.big-main-title {
+  font-size: 1.5rem;
+  color: #c8b197;
+  display: block;
+  margin-bottom: 2rem; }
+
+button {
+  background-color: #c8b197;
+  padding: .5rem 1rem;
+  color: #000;
+  font-weight: bolder;
+  margin-right: 1rem; }
+
+button:hover {
+  background-color: #E50914;
+  transform: scale(1.1);
+  color: #fff; }
+
+i {
+  font-weight: bolder;
+  font-size: 1.3rem;
+  margin-right: .5rem;
+  color: #000;
+  /* color: #c8b197; */ }
+
+input, textarea {
+  color: #000; }
+
+input, textarea:focus {
+  outline: none; }
+
+.section-main .support-box {
+  width: 30%;
+  border-left: 1px solid wheat;
+  border-right: 1px solid wheat;
+  text-align: center; }
+
+.section-main .support-box .img-box {
+  /* height: 20rem; */
+  width: 50%;
+  margin: auto;
+  height: 20rem; }
+
+.section-main .support-box .img-box img {
+  height: 100%;
+  object-fit: contain; }
+
+.section-main .support-box .desc {
+  margin-top: 1rem;
+  margin-bottom: 3rem; }
+
+.section-main .support-box .desc span {
+  font-size: 1.2rem;
+  color: #bbb; }
+
+.section-main .support-box .desc .book-name {
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: #fff; }
+
+.section-main .support-box .note {
+  border: none;
+  border-top: 1px solid #c8b197;
+  border-bottom: 1px solid #c8b197;
+  border-radius: 2rem;
+  padding: 1rem;
+  margin: 0 2rem;
+  margin-bottom: 3rem; }
+
+.section-main .support-box .note span {
+  display: block;
+  font-size: 1.5rem;
+  color: #c8b197;
+  margin-bottom: .5rem; }
+
+.section-main .support-box .note label {
+  font-size: 1.2rem; }
+
+.btn-action {
+  margin-bottom: 2rem; }
+
+/* responsive */
+@media (max-width: 1300px) {
+  .section-main .container {
+    display: block; }
+  .section-main .support-box, iframe {
+    width: 100%; }
+  .section-main iframe {
+    min-height: 45rem; }
+  input, textarea {
+    width: 100%; } }
+
+@media (max-width: 800px) {
+  .section-main iframe {
+    min-height: 40rem; } }
