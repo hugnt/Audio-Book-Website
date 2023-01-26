@@ -2,9 +2,14 @@
   display: flex;
   justify-content: space-between; }
 
-iframe {
-  /* height: 100%; */
-  width: 70%; }
+iframe 
+{ 
+  width: 70%;
+}
+iframe > html
+{ 
+  display: none;
+}
 
 .left-bar {
   margin: 2rem 0;

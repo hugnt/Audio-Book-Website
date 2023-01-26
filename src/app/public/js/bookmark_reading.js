@@ -16,10 +16,13 @@ $(document).ready(function(){
     $('.goHome').click(function(){
         window.location.href = 'bookmark'
     });
-// <<<<<<< HEAD
+    console.log("props:",bookIndex);
+    var DEFAULT_URL =  "../../source/pdf/"+bookIndex+".pdf";
+    console.log(DEFAULT_URL);
+    $('.flip-book-container').FlipBook({pdf: DEFAULT_URL})
+    
+    
+
 });
 
 
-// =======
-// });
-// >>>>>>> f339dcb42f1f51b7336dad64a3430a29a71cd0a0

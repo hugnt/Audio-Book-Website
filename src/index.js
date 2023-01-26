@@ -16,6 +16,7 @@ web.set('views', [
 ]);
 
 web.use(express.static('./src/app/public'));
+web.use(express.static('./node_modules/3d-flip-book'));
 
 //route
 route(web);
