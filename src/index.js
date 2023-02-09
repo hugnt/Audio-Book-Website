@@ -1,9 +1,9 @@
 const path = require('path');
 const express = require('express');
 const web = express();
+const db = require('./config/db/db');
 const route = require('./routes/index.router');
 const {engine} = require('express-handlebars');
-
 
 //template engines
 web.engine('.hbs', engine({
@@ -16,11 +16,14 @@ web.set('views', [
 ]);
 
 web.use(express.static('./src/app/public'));
-web.use(express.static('./node_modules/3d-flip-book'));
+// web.use(express.static('./node_modules/3d-flip-book'));
+
+//connect db
+db.connect();
 
 //route
 route(web);
 
-web.listen(3000,"0.0.0.0", () => {
-    console.log('listen on port 3000...')
+web.listen(8888,"0.0.0.0", () => {
+    console.log('listen on port 8888...')
 });

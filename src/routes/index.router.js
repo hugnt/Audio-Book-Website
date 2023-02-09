@@ -5,6 +5,7 @@ function route(web) {
 
     web.use('/admin', adminRouter);
     web.use('/', userRouter);
+
 }
 
 module.exports = route;
