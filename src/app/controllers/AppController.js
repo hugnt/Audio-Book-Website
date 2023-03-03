@@ -1,7 +1,55 @@
+const mysql = require('mysql');
+require('dotenv').config();
+
+const pool  = mysql.createPool({
+    connectionLimit : 10,
+    host            : process.env.DB_HOST,
+    user            : process.env.DB_USER,
+    password        : process.env.DB_PASS,
+    database        : process.env.DB_NAME
+});
+
+
 class AppController {
 
     home(req, res) {
-        res.render('home');
+        var books, authors;
+        const queryBooks = "SELECT * FROM sach";
+        const queryAuthors = "SELECT * FROM tac_gia";
+        pool.getConnection((err, connection) =>{
+            if(err) throw err;
+            
+            console.log('connected as id ' + connection.threadId);
+            connection.query('SELECT * from sach', (err, rows) => {
+                connection.release() 
+                if (!err) {
+                    res.render('home', {books:rows});
+                    books = rows;
+                } else {
+                    console.log(err)
+                }
+                console.log("DATA BOOKS: ",books);
+            });
+            // connection.query('SELECT * from tac_gia', (err, rows) => {
+            //     connection.release() 
+            //     if (!err) {
+            //         res.render('home', {authors:rows});
+            //         authors = rows;
+            //     } else {
+            //         console.log(err)
+            //     }
+            //     console.log("DATA BOOKS: ",books);
+            // });
+
+            // res.render('home', {books, authors});
+            
+
+            
+
+        });
+       
+
+        
     }
 
     home01(req, res) {

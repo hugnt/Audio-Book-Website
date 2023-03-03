@@ -1,47 +1,44 @@
-* {
-  padding: 0px;
-  margin: 0px;
-  color: #c8b197;
-  /*remove generic color styling in layout.css*/ }
-
-body {
-  background-color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-  margin: 0; }
-
 hr {
   width: 80%;
-  margin: auto; }
+  margin: auto;
+}
 
 .quiz-container {
   border-radius: 10px;
+  margin:8rem auto;
   width: 600px;
+  height: 20rem;
   overflow: hidden;
-  border: 3px solid #c8b197; }
+  border: 3px solid #c8b197;
+}
 
 .quiz-container h2 {
   padding: 1rem;
   text-align: center;
-  font-size: 22px; }
+  font-size: 22px;
+}
 
 .quiz-container a {
   color: white;
   font-size: 18px;
-  line-height: 20px; }
+  line-height: 20px;
+}
 
 .quiz-container li {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 12%; }
+  margin-left: 12%;
+}
 
 .quiz-container li:last-child {
   float: left;
-  margin: 10px; }
+  margin-top: 2rem;
+}
+.quiz-container li:last-child:hover {
+  text-decoration: underline;
+}
 
 .quiz-container a:hover {
   color: #c8b197;
-  cursor: pointer; }
+  cursor: pointer;
+}

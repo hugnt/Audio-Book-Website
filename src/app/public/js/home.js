@@ -1,5 +1,6 @@
 import {booksData as books} from './layout.js'
 
+var $ = jQuery.noConflict();
 function JS()
 {
 const left=document.querySelector('.bi-arrow-left')
@@ -28,11 +29,11 @@ function autoLoop()
 {
     
     maxScrollLeft = list_writer.scrollWidth - list_writer.clientWidth;
-    console.log(maxScrollLeft);
+    // console.log(maxScrollLeft);
     list_writer.scrollLeft+=n;
     if(list_writer.scrollLeft>=maxScrollLeft)
     {
-        console.log("decrease: ",list_writer.scrollLeft+" & "+"0");
+        // console.log("decrease: ",list_writer.scrollLeft+" & "+"0");
         n=-100;
         checkTimeOut = false;
         return;
@@ -40,7 +41,7 @@ function autoLoop()
     }
     if(list_writer.scrollLeft<=0)
     {
-        console.log("increase:",list_writer.scrollLeft +" & "+ maxScrollLeft);
+        // console.log("increase:",list_writer.scrollLeft +" & "+ maxScrollLeft);
         n=100;
         checkTimeOut = true;
         return;
@@ -72,7 +73,7 @@ function Show_Banners(n)
         `
     }
 }
-console.log(books[0].author.replace(" ","\n"));
+// console.log(books[0].author.replace(" ","\n"));
 Show_Banners(allAuthor);
 var i=0;
 var checkin = false;
@@ -84,7 +85,7 @@ function autoToggle()
 
     var cntTime=0;
     setTimeout(function() {   
-        console.log('hello'); 
+        // console.log('hello'); 
         if(i>0)
         {
             item[i-1].querySelector('img').classList.remove('scale-out-img'); 
@@ -119,30 +120,30 @@ function autoToggle()
 // clearInterval(mySlideLoop);
 autoToggle()
 
-function Show_LastRequest(n,m)
-{
-    $('.last-request-box .list-requests').innerHTML='';
-    let no = 0;
-    for(let i = 1; i<=n ;i++)
-    {
-        for(let j=1;j<=m;j++)
-        {
-            no+=1;
-            $('.last-request-box .list-requests').innerHTML+=`
-            <li class="rq-item">
-                <div class="book">
-                    <span class="No desc">${no}</span>
-                    <img src="/img/${i}/${j}.jpg" alt="" class="img-item">
-                    <span class="title main-title">${books[i-1].Poem[j-1]}</span>
-                </div>
-                <span class="author main-title">${books[i-1].author}</span>
-                <span class="icon-star fa-regular fa-star-half-stroke"><span class="rate desc">${books[i-1].rate[j-1]} ${books[i-1].reviewer[j-1]} reviewers</span></span>
-            </li>
-            `
-        }
-    }
-}
-Show_LastRequest(4,3);
+// function Show_LastRequest(n,m)
+// {
+//     $('.last-request-box .list-requests').innerHTML='';
+//     let no = 0;
+//     for(let i = 1; i<=n ;i++)
+//     {
+//         for(let j=1;j<=m;j++)
+//         {
+//             no+=1;
+//             $('.last-request-box .list-requests').innerHTML+=`
+//             <li class="rq-item">
+//                 <div class="book">
+//                     <span class="No desc">${no}</span>
+//                     <img src="/img/${i}/${j}.jpg" alt="" class="img-item">
+//                     <span class="title main-title">${books[i-1].Poem[j-1]}</span>
+//                 </div>
+//                 <span class="author main-title">${books[i-1].author}</span>
+//                 <span class="icon-star fa-regular fa-star-half-stroke"><span class="rate desc">${books[i-1].rate[j-1]} ${books[i-1].reviewer[j-1]} reviewers</span></span>
+//             </li>
+//             `
+//         }
+//     }
+// }
+// Show_LastRequest(4,3);
 
 function Show_Writers(n)
 {
@@ -161,28 +162,7 @@ function Show_Writers(n)
 
 Show_Writers(allAuthor);
 
-function Show_Books(n,m)
-{
-    $('.book-lists').innerHTML='';
-    let no = 0;
-    for(let i = 1; i<=n ;i++)
-    {
-        for(let j=1;j<=m;j++)
-        {
-            no+=1;
-            $('.book-lists').innerHTML+=`
-            <div class="book-item" data-book="${i}_${j}">
-            <div class="img-box"><img src="/img/${i}/${j}.jpg" alt="" class="book-img"></div>
-                <span class="author desc">${books[i-1].author}</span>
-                <span class="name main-title">${books[i-1].Poem[j-1]}</span>
-                <span class="icon-star fa-regular fa-star-half-stroke"><span class="rate desc">${books[i-1].rate[j-1]} ${books[i-1].reviewer[j-1]}
-                        reviewers</span></span>
-             </div>
-            `
-        }
-    }
-}
-Show_Books(3,3);
+
 }
 JS();
 //Search box
@@ -193,7 +173,7 @@ category.click({param: category},ChangeOption);
 century.click({param: century},ChangeOption);
 function ChangeOption(event){
     let tmp=$(this).text();
-    console.log(tmp);
+    // console.log(tmp);
     let main_title=$(this).parent().parent().find('.main-title').text();
     if(main_title=='All')
     {
@@ -229,7 +209,7 @@ document.querySelectorAll('.writer-item .img-box').forEach((item,index)=>{
     item.onclick=function(){
         localStorage.indexOf=index;
         window.location.href='home02'
-        console.log(localStorage.indexOf)
+        // console.log(localStorage.indexOf)
     }
 })
 
