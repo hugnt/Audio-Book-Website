@@ -5,8 +5,7 @@ const db = require('./config/db/db');
 const route = require('./routes/index.router');
 const {engine} = require('express-handlebars');
 
-//env
-require('dotenv').config();
+
 
 //template engines
 web.engine('.hbs', engine({
@@ -23,7 +22,8 @@ web.use(express.static('./src/app/public'));
 web.use(express.static('./node_modules/3d-flip-book'));
 
 //connect db
-db.connect();
+console.log('Connect database successfully on port',db.config.connectionConfig.port);
+
 
 //route
 route(web);

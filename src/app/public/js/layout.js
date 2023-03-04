@@ -3,16 +3,16 @@ var $j = jQuery.noConflict();
 $j(document).ready(function () {
 
     //move page
-    var pathName = window.location.pathname;
-    const Array_path = pathName.split("/");
-    var mainpath = Array_path[Array_path.length - 1];
-    var subName = mainpath;
-    if (subName.includes("01")) {
-        subName = subName.replace("01", "\0");
-    }
-    if (subName.includes("_")) {
-        subName = subName.replace("_", " ");
-    }
+    // var pathName = window.location.pathname;
+    // const Array_path = pathName.split("/");
+    // var mainpath = Array_path[Array_path.length - 1];
+    // var subName = mainpath;
+    // if (subName.includes("01")) {
+    //     subName = subName.replace("01", "\0");
+    // }
+    // if (subName.includes("_")) {
+    //     subName = subName.replace("_", " ");
+    // }
 
     $j(".menu-item").each(function () {
         // console.log($j(this).text());
@@ -23,18 +23,18 @@ $j(document).ready(function () {
 
 
     // console.log(window.location.origin);
-    $j(".nav-bar .menu-item").click(function () {
+    // $j(".nav-bar .menu-item").click(function () {
 
-        let itemName = $j(this).find(">a").text();
-        if (itemName.includes(" ")) {
-            itemName = itemName.replace(" ", "_");
-        }
-        let stringURL = "./" + itemName + "";
-        window.location.href = stringURL;
-        // window.open(stringURL, "_blank");
-        // console.log(stringURL);
+    //     let itemName = $j(this).find(">a").text();
+    //     if (itemName.includes(" ")) {
+    //         itemName = itemName.replace(" ", "_");
+    //     }
+    //     let stringURL = "./" + itemName + "";
+    //     window.location.href = stringURL;
+    //     // window.open(stringURL, "_blank");
+    //     // console.log(stringURL);
 
-    });
+    // });
     //
     $j('.bi-lightbulb-off-fill').toggle(
         function () {

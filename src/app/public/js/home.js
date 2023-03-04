@@ -55,26 +55,6 @@ function autoLoop()
 const $=document.querySelector.bind(document)
 const $$=document.querySelectorAll.bind(document)
 
-const allAuthor = books.length;
-const allBooks = books[0].Poem.length;
-
-function Show_Banners(n)
-{
-    $('.slide-items .list-items').innerHTML='';
-    for(var i = 1; i <= n; i++)
-    {
-        $('.slide-items .list-items').innerHTML+=`
-        <li class="item"> 
-            <div class="img-box">
-                <img src="${books[i-1].ava}" alt="" class="img-item">
-            </div>
-            <span class="author-name">${books[i-1].author.replace(" ","<br/>")}</span>
-        </li>
-        `
-    }
-}
-// console.log(books[0].author.replace(" ","\n"));
-Show_Banners(allAuthor);
 var i=0;
 var checkin = false;
 var curSrc;
@@ -120,47 +100,7 @@ function autoToggle()
 // clearInterval(mySlideLoop);
 autoToggle()
 
-// function Show_LastRequest(n,m)
-// {
-//     $('.last-request-box .list-requests').innerHTML='';
-//     let no = 0;
-//     for(let i = 1; i<=n ;i++)
-//     {
-//         for(let j=1;j<=m;j++)
-//         {
-//             no+=1;
-//             $('.last-request-box .list-requests').innerHTML+=`
-//             <li class="rq-item">
-//                 <div class="book">
-//                     <span class="No desc">${no}</span>
-//                     <img src="/img/${i}/${j}.jpg" alt="" class="img-item">
-//                     <span class="title main-title">${books[i-1].Poem[j-1]}</span>
-//                 </div>
-//                 <span class="author main-title">${books[i-1].author}</span>
-//                 <span class="icon-star fa-regular fa-star-half-stroke"><span class="rate desc">${books[i-1].rate[j-1]} ${books[i-1].reviewer[j-1]} reviewers</span></span>
-//             </li>
-//             `
-//         }
-//     }
-// }
-// Show_LastRequest(4,3);
 
-function Show_Writers(n)
-{
-    $('.list-writers').innerHTML='';
-    for(let i = 1; i<=n ;i++)
-    {
-        $('.list-writers').innerHTML+=`
-        <li class="writer-item">
-            <div class="img-box"><img src="${books[i-1].ava}" alt="" class="avt"></div>
-            <span class="name main-title">${books[i-1].author}</span>
-            <span class="icon-star fa-regular fa-star-half-stroke"><span class="rate desc">${books[i-1].rate[0]} ${books[i-1].reviewer[0]} reviewers</span></span>
-         </li>
-        `
-    }
-}
-
-Show_Writers(allAuthor);
 
 
 }

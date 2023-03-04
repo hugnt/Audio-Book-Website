@@ -8,8 +8,8 @@
             <div class="slide">
                 <div class="slide-show">
                     <div class="head-banner">
-                        <span class="big-title d-block">poets of the 19th century</span>
-                        <span class="desc d-block">More than 300 poems</span>
+                        <span class="big-title d-block">Nhà văn của mọi thời đại</span>
+                        <span class="desc-head d-block">Hơn 300 tác phẩm bất hủ</span>
                     </div>
                     <div class="w-50 img-box">
                         <img src="/img/home/slide.png" alt="">
@@ -18,7 +18,14 @@
                 </div>
                 <div class="slide-items">
                     <ul class="list-items d-flex">
-
+                        {{#each authors}}
+                        <li class="item">
+                            <div class="img-box">
+                                <img src="/img/author/{{this.anh_dai_dien}}" alt="" class="img-item">
+                            </div>
+                            <span class="author-name">{{this.ten_tac_gia}}</span>
+                        </li>
+                        {{/each}}
                     </ul>
                 </div>
             </div>
@@ -28,32 +35,29 @@
                     <input type="search" name="" id="" placeholder="Search">
                 </div>
                 <div class="category select-option">
-                    <span class="title desc">Category</span>
+                    <span class="title desc">Phân loại</span>
                     <div class="btn-select  d-flex">
                         <span class="main-title">All</span>
                         <span class="btn-down fa-solid fa-chevron-down"></span>
                     </div>
 
                     <ul class="list-options">
-                        <li class="option">Mark Twain</li>
-                        <li class="option">Fyodor Tyutchev</li>
-                        <li class="option">Alexander Puskin</li>
-                        <li class="option">Mikhail Lermontov</li>
-                        <li class="option">Karolina Pavlova</li>
-                        <li class="option">Khomyakov Avtoportre</li>
+                        {{#each authors}}
+                        <li class="option">{{this.ten_tac_gia}}</li>
+                        {{/each}}
                     </ul>
                 </div>
                 <div class="century select-option">
-                    <span class="title desc">Century</span>
+                    <span class="title desc">Thời đại</span>
                     <div class="btn-select  d-flex">
-                        <span class="main-title">All</span>
+                        <span class="main-title">Tất cả</span>
                         <span class="btn-down fa-solid fa-chevron-down"></span>
                     </div>
 
                     <ul class="list-options">
-                        <li class="option">19th</li>
-                        <li class="option">20th</li>
-                        <li class="option">21th</li>
+                        {{#each authors}}
+                        <li class="option">{{this.thoi_dai}}</li>
+                        {{/each}}
                     </ul>
                 </div>
                 <div class="btn-go">
@@ -61,7 +65,7 @@
                 </div>
             </div>
             <div class="last-request-box">
-                <span class="desc">Last request</span>
+                <span class="desc">Tác phẩm nổi bật</span>
                 <ul class="list-requests">
                     {{#each books}}
                     <li class="rq-item">
@@ -73,7 +77,7 @@
                         <span class="author main-title">{{this.ten_tac_gia}}</span>
                         <span class="icon-star fa-regular fa-star-half-stroke">
                             <span class="desc">{{this.ty_le_sao}}</span>
-                            <span class="rate desc">{{this.sl_danh_gia}}k Reviewers</span>
+                            <span class="rate desc">{{this.sl_danh_gia}}k Đánh giá</span>
                         </span>
                     </li>
                     {{/each}}
@@ -83,18 +87,27 @@
         <div class="right-content w-50">
             <div class="writer-zone">
                 <div class="topic_writer">
-                    <span class="main-topic d-block" id="pp-writer">Popular writers</span>
+                    <span class="main-topic d-block" id="pp-writer">Tác giả nổi bật</span>
                     <div class="btn_s">
                         <i class="bi-move bi-arrow-left"></i>
                         <i class="bi-move bi-arrow-right"></i>
                     </div>
                 </div>
                 <ul class="list-writers d-flex">
-
+                    {{#each authors}}
+                    <li class="writer-item">
+                        <div class="img-box"><img src="/img/author/{{this.anh_dai_dien}}" alt="" class="avt"></div>
+                        <span class="name main-title">{{this.ten_tac_gia}}</span>
+                        <span class="icon-star fa-regular fa-star-half-stroke">
+                            <span class="desc">{{this.ty_le_sao}}</span>
+                            <span class="rate desc">{{this.sl_danh_gia}}k Đánh giá</span>
+                        </span>
+                    </li>
+                    {{/each}}
                 </ul>
             </div>
             <div class="book-zone">
-                <span class="main-topic">Books</span>
+                <span class="main-topic">Gợi ý đọc</span>
                 <div class="book-lists d-flex">
                     {{#each books}}
                     <div class="book-item" data-book="">
@@ -103,7 +116,7 @@
                         <span class="name main-title">{{this.ten_sach}}</span>
                         <span class="icon-star fa-regular fa-star-half-stroke">
                             <span class="desc">{{this.ty_le_sao}}</span>
-                            <span class="rate desc">{{this.sl_danh_gia}}k Reviewers</span>
+                            <span class="rate desc">{{this.sl_danh_gia}}k Đánh giá</span>
                         </span>
 
                     </div>
