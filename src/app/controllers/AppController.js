@@ -13,7 +13,7 @@ class AppController {
             })
             .catch(next); 
     }
-
+ 
     home01(req, res) {
         res.render('home01');
     };
@@ -33,9 +33,16 @@ class AppController {
     bookmark_reading(req, res) {
         res.render('bookmark_reading');
     };
-
-    bookmark(req, res) {
-        res.render('bookmark');
+    
+    bookmark(req, res, next) {
+        Promise.all([Book.getBooks({}), Author.getAuthors({})])
+        .then((results)=>{
+            res.render('bookmark',{
+                books:results[0],
+                authors: results[1]
+            });
+        })
+        .catch(next); 
     };
 
     bookstore(req, res) {
@@ -49,6 +56,17 @@ class AppController {
     community(req, res) {
         res.render('community');
     };
+
+    audio_book(req, res, next) {
+        Book.getBooks({})
+        .then((books)=>{
+            res.render('audio_book',{
+                books
+            });
+        })
+        .catch(next); 
+    };
+
 
 }
 

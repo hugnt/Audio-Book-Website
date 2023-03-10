@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const appController = require('../app/controllers/AppController');
+const audioController = require('../app/controllers/AudioController');
 
 router.get('/home', appController.home);
 router.get('/home01', appController.home01);
@@ -12,5 +13,12 @@ router.get('/bookmark', appController.bookmark);
 router.get('/bookstore', appController.bookstore);
 router.get('/challenge', appController.challenge);
 router.get('/community', appController.community);
+router.get('/audio_book', appController.audio_book);
+
+
+router.get('/audio_book/:id', audioController.getById);
+router.get('/audio_book/api/:content/:voice/:speed', audioController.getByAPI);
+
+
 
 module.exports = router

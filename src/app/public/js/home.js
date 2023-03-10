@@ -1,6 +1,5 @@
-import {booksData as books} from './layout.js'
 
-var $ = jQuery.noConflict();
+// var $ = jQuery.noConflict();
 function JS()
 {
 const left=document.querySelector('.bi-arrow-left')
@@ -115,10 +114,10 @@ function ChangeOption(event){
     let tmp=$(this).text();
     // console.log(tmp);
     let main_title=$(this).parent().parent().find('.main-title').text();
-    if(main_title=='All')
+    if(main_title=='Tất cả')
     {
         $(this).text(event.data.param.last().text())
-        event.data.param.last().text('All');
+        event.data.param.last().text('Tất cả');
     }
     else
     {

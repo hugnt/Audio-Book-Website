@@ -1,4 +1,4 @@
-import {booksData as books} from '/js/layout.js'
+
 var change = 0;
 var switchLight=0;
 var myChart;

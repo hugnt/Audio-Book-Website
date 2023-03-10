@@ -37,7 +37,7 @@
                 <div class="category select-option">
                     <span class="title desc">Phân loại</span>
                     <div class="btn-select  d-flex">
-                        <span class="main-title">All</span>
+                        <span class="main-title">Tất cả</span>
                         <span class="btn-down fa-solid fa-chevron-down"></span>
                     </div>
 
@@ -70,7 +70,7 @@
                     {{#each books}}
                     <li class="rq-item">
                         <div class="book">
-                            <span class="No desc">{{@index}}</span>
+                            <span class="No desc">{{add1index @index 1}}</span>
                             <img src="/img/covers/{{this.bia_sach}}" alt="" class="img-item">
                             <span class="title main-title">{{this.ten_sach}}</span>
                         </div>
@@ -128,4 +128,4 @@
 </section>
 
 
-<script src="/js/home.js" type="module"></script>
+<script src="/js/home.js"></script>

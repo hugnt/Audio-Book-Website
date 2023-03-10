@@ -2,14 +2,21 @@
 const querySelectAll = 'SELECT * FROM sach';
 const {excuteQuery} = require('../../util/mySql')
 
+
 const Book = {
     getBooks: async function (obj) {
         var query;
-        if(!obj){
+        if(Object.keys(obj).length === 0){
             query = querySelectAll;
         }
         else{
-            query = querySelectAll;
+            query = `SELECT * FROM sach WHERE `; 
+            for (const [key, value] of Object.entries(obj)) {
+                console.log(`${key}: ${value}`);
+                query += `${key} = ${value} AND `
+            }
+            query += '1';
+            console.log(query);
         }
         try {
             const results = await excuteQuery(query);

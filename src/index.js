@@ -9,8 +9,15 @@ const {engine} = require('express-handlebars');
 
 //template engines
 web.engine('.hbs', engine({
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+        add1index: (a, b) => a + b,
+        json: (context) => JSON.stringify(context),
+        slice:(arr, start, end) => arr.slice(start, end)
+    },
 }));
+
+
 web.set('view engine', 'hbs');
 web.set('views', [
     path.join(__dirname, 'app/views'),

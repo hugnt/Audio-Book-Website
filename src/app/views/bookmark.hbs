@@ -1,110 +1,109 @@
 {{!-- css --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 <link rel="stylesheet" href="/css/bookmark.css">
 
 {{!-- main - page --}}
 <section class="section-banner">
-
     <div class="container d-flex">
         <div class="swiper slide-books w-30">
-            <span class="main-tille">Popular Books</span>
+            <span class="main-tille">Sách nổi bật</span>
             <ul class="list-books d-flex swiper-wrapper">
-
+                {{#each books}}
+                <li class="book-item swiper-slide " data-book="">
+                    <div class="img-box"><img src="/img/covers/{{this.bia_sach}}" alt="" class="w-100"></div>
+                </li>
+                {{/each}}
             </ul>
-            <div class="swiper-button-next btn-move" style="color: #E50914 ;"></div>
-            <div class="swiper-button-prev btn-move" style="color: #E50914 ;"></div>
+            <div class="swiper-button-next" style="color: #E50914 ;"></div>
+            <div class="swiper-button-prev" style="color: #E50914 ;"></div>
             <div class="swiper-pagination" style="color: #E50914 ;"></div>
         </div>
-        <div class="infor-books w-40">
+
+        
+        <div class="infor-books slide-infor-books w-60">
             <ul class="menu-info  d-flex">
-                <li class="info-item">Description</li>
-                <li class="info-item">Author</li>
-                <li class="info-item">Rate</li>
+                <li class="info-item">Mô tả</li>
+                <li class="info-item">Tác giả</li>
+                <li class="info-item">Đánh giá</li>
             </ul>
-            <div class="board-infor">
-                <div class="desc">
-                    <span class="book-name">The good guy</span>
-                    <div class="aside-infor">
-                        <span class="year"><i class="fa-solid fa-thumbs-up"></i>2019</span>
-                        <span class="age-allow">16+</span>
-                        <span class="length">700 pages</span>
-                    </div>
-                    <div class="language">
+            <div thumbsSlider="" class="swiper-wrapper">
+                {{#each books}}
+                <div class="infor-box swiper-slide ">
+                    <div class="slide-box d-flex">
+                        <div class="board-infor w-60">
+                            <div class="desc">
+                                <span class="book-name">{{this.ten_sach}}</span>
+                                <div class="aside-infor">
+                                    <span class="year"><i class="fa-solid fa-thumbs-up"></i>2019</span>
+                                    <span class="age-allow">Thể loại: {{this.the_loai}}</span>
+                                    <span class="length">Số trang: {{this.so_trang}}</span>
+                                </div>
+                                <div class="language">
 
-                        <span><i class="fa-solid fa-earth-americas" style="margin-right:.5rem ;"></i>Language:
-                            English</span>
+                                    <span><i class="fa-solid fa-earth-americas"
+                                            style="margin-right:.5rem ;"></i>Ngôn ngữ:
+                                        Tiếng Việt</span>
+                                </div>
+                                <p class="summary">{{this.mo_ta}}</p>
+                                <div class="btn-action">
+                                    <button class="btn-read"><i class="fa-solid fa-book-open-reader"></i>Đọc ngay</button>
+                                    <button class="btn-add"><i class="fa-solid fa-plus"></i>Thêm vào danh sách</button>
+                                    <button class="btn-like"><i class="fa-solid fa-thumbs-up"></i></button>
+                                </div>
+                                <article class="about_author">
+                                    <span class="main-title" style="margin:1rem 0; display: block;">{{this.ten_tac_gia}}</span>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                        Nobis voluptatibus enim, perferendis in fuga excepturi,
+                                        fugit similique illo dicta, maiores vel laborum animi quasi
+                                        facere consequatur sit veritatis asperiores qui.
+                                    </p>
+                                    <a class="read-more d-block" href="#">Read more ...</a>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="author-ava w-40">
+                            <img src="/img/home01/png/1.png" alt="" class="w-100">
+                        </div>
                     </div>
-                    <p class="summary">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                        Nobis voluptatibus enim, perferendis in fuga excepturi,
-                        fugit similique illo dicta, maiores vel laborum animi quasi
-                        facere consequatur sit veritatis asperiores qui.
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora
-                        ullam similique in error cum animi suscipit, exercitationem eveniet?
-                        Adipisci dignissimos
-                        sed nobis, ab placeat blanditiis aut consequuntur quia ea quaerat?
-                    </p>
-                    <div class="btn-action">
-                        <button class="btn-read"><i class="fa-solid fa-book-open-reader"></i>Read now</button>
-                        <button class="btn-add"><i class="fa-solid fa-plus"></i>Add to my list books</button>
-                        <button class="btn-like"><i class="fa-solid fa-thumbs-up"></i></button>
-                    </div>
-                    <article class="about_author">
-                        <span class="main-title" style="margin:1rem 0; display: block;">Mark Twain</span>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                            Nobis voluptatibus enim, perferendis in fuga excepturi,
-                            fugit similique illo dicta, maiores vel laborum animi quasi
-                            facere consequatur sit veritatis asperiores qui.
-                        </p>
-                        <a class="read-more d-block" href="#">Read more ...</a>
-                    </article>
-
                 </div>
-
+                {{/each}}
             </div>
         </div>
-        <div class="author-ava w-30">
-            <img src="/img/home01/png/1.png" alt="" class="w-100">
-        </div>
-
-    </div>
 </section>
 
 <section class="section-main">
     <div class="container">
-        <span class="big-main-title">Library</span>
+        <span class="big-main-title">Thư viện</span>
         <div class="search-box d-flex">
             <div class="typing fa-solid fa-magnifying-glass">
                 <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                 <input type="search" name="" id="" placeholder="Search">
             </div>
             <div class="category select-option">
-                <span class="title desc">Category</span>
+                <span class="title desc">Phân loại</span>
                 <div class="btn-select  d-flex">
-                    <span class="main-title">All</span>
+                    <span class="main-title">Tất cả</span>
                     <span class="btn-down fa-solid fa-chevron-down"></span>
                 </div>
 
                 <ul class="list-options">
-                    <li class="option">Mark Twain</li>
-                    <li class="option">Fyodor Tyutchev</li>
-                    <li class="option">Alexander Puskin</li>
-                    <li class="option">Mikhail Lermontov</li>
-                    <li class="option">Karolina Pavlova</li>
-                    <li class="option">Khomyakov Avtoportre</li>
+                    {{#each authors}}
+                    <li class="option">{{this.ten_tac_gia}}</li>
+                    {{/each}}
                 </ul>
             </div>
             <div class="century select-option">
-                <span class="title desc">Century</span>
+                <span class="title desc">Thời đại</span>
                 <div class="btn-select  d-flex">
-                    <span class="main-title">All</span>
+                    <span class="main-title">Tất cả</span>
                     <span class="btn-down fa-solid fa-chevron-down"></span>
                 </div>
 
                 <ul class="list-options">
-                    <li class="option">19th</li>
-                    <li class="option">20th</li>
-                    <li class="option">21th</li>
+                    {{#each authors}}
+                    <li class="option">{{this.thoi_dai}}</li>
+                    {{/each}}
                 </ul>
             </div>
             <div class="btn-go">
@@ -112,7 +111,17 @@
             </div>
         </div>
         <div class="book-lists d-flex">
-
+            {{#each books}}
+            <div class="book-item" data-book="">
+                <div class="img-box"><img src="/img/covers/{{this.bia_sach}}" alt="" class="book-img"></div>
+                <span class="author desc">{{this.ten_tac_gia}}</span>
+                <span class="name main-title">{{this.ten_sach}}</span>
+                <span class="icon-star fa-regular fa-star-half-stroke">
+                    <span class="desc">{{this.ty_le_sao}}</span>
+                    <span class="rate desc">{{this.sl_danh_gia}}k Đánh giá</span>
+                </span>
+            </div>
+            {{/each}}
         </div>
     </div>
 </section>
@@ -122,5 +131,5 @@
 <!-- jquery -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-{{!-- script  --}}
-<script src="/js/bookmark.js" type="module"></script>
+{{!-- script --}}
+<script src="/js/bookmark.js"></script>
