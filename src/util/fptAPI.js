@@ -22,19 +22,18 @@ async function getAudioAPI(data, voice, speed) {
             redirect: 'follow',
         };
 
-        const response = await axios(requestOptions);
-
+        var response = await axios(requestOptions);
         if (response.status !== 200) {
             const message = `An error has occured: ${response.status}`;
             throw new Error(message);
         }
-        const audioData = response.data;
-        console.log(audioData.async);
+        var audioData = await response.data;
+        // console.log(audioData);
         
-        return audioData.async;
+        return audioData;
 
     } catch (error) {
-        console.log(error);
+        console.log("ERROR in getAudioAPI: ",error);
     }
 }
 

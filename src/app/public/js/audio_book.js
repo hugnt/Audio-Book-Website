@@ -106,12 +106,21 @@ $( document ).ready(function() {
     });
 
 
+
+
     $('.excute-audio button').click(function(e){
         e.preventDefault();
+        setPending(false);
+        setInput(false);
+        setLoading(true);
+    
         for (const [key, value] of Object.entries(validate)) {
             console.log(`${key}: ${value}`);
             if(value==false){
-                alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key)
+                alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key);
+                setLoading(false);
+                setPending(true);
+                setInput(true);
                 return;
             }
         }
@@ -125,8 +134,6 @@ $( document ).ready(function() {
 
 
         //đọc file ra text truyền vào biến content
-
-
         if (content.trim()==="") {
             alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
             return;
@@ -139,16 +146,62 @@ $( document ).ready(function() {
             url: `/audio_book/api/${content}/${voice}/${speed}`,
             type: 'GET',
             dataType: 'json',
-            success: function (audioRes) {
-                audioOutput.attr('src', audioRes);
-                console.log(audioRes);
+            success: function (response) {
+                setTimeout(() => {
+                    setPending(false);
+                    setLoading(false);
+                    setInput(true);
+                    setOutput(true);
+                    console.log(response);
+                    audioOutput.attr('src', response.async);
+                }, 1000); // Thực thi sau 5 giây: do lần đầu trả về link xo độ trễ do bên API
             },
             error: function (xhr, status, error) {
+                setLoading(true);
+                // setPending(true);
+                setInput(true);
                 console.log(error);
             }
         });
     })
 
+    function setLoading(on){
+        if(on===true){
+            $('.section-studio .loading').css("display","flex");
+        }    
+        else{
+            $('.section-studio .loading').css("display","none");
+        }
+    }
+    function setPending(on){
+        if(on===true){
+            $('.section-studio .pending').css("display","block");
+        }    
+        else{
+            $('.section-studio .pending').css("display","none");
+        }
+    }
+    function setOutput(on){
+        if(on===true){
+            $('.section-studio .output').css("display","block");
+        }    
+        else{
+            $('.section-studio .output').css("display","none");
+        }
+    }
+
+    function setInput(on){
+        if(on===true){
+            $('.section-studio .input').prop("disabled", false );
+            $('.section-studio .input').css("opacity","1");
+        }    
+        else{
+            $('.section-studio .input').prop("disabled", true );
+            $('.section-studio .input').css("opacity","0.5");
+        }
+    }
+   
+   
    
         
 });

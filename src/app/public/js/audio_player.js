@@ -96,7 +96,7 @@ $(function () {
         });
     }
 
-    $('.section-banner .current-book-slides .book').click(function () {
+    $('.section-banner .current-book-slides .book .action .btn-listen').click(function () {
         const bookId = $(this).data('id');
         console.log("selectedBook: ", $(this).data('book'));
         getAudioBook(bookId);

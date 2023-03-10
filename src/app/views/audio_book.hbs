@@ -50,7 +50,7 @@
                                 <span>Giá bán: 100.000 VNĐ</span>
                             </div>
                             <div class="action">
-                                <div class="btn-listen">
+                                <div class="btn-listen" data-id='{{this.id}}'>
                                     <span class="action-name">Nghe toàn bộ</span>
                                     <div class="icon-listen action-icon fa-regular fa-circle-play">
                                     </div>
@@ -220,6 +220,14 @@
                     </div>
                 </div>
             </div>
+            <div class="instance italic-desc">
+                *Hướng dẫn: 
+                <br/>1. Bước 1 Để tạo ra sách của bạn trước hết trong bước 1 chọn 1 trong 2 lựa chọn hoặc là file dạng text, pdf,
+                docx hay bạn có thể nhập vào văn bản bạn muốn chuyển thể (cách này thời gian chuyển đổi sẽ ngắn hơn).
+                <br/>2. Bước 2 chọn loại giọng đọc bạn muốn, nếu không chọn sẽ mặc định là giọng Ban Mai - Nữ miền bắc,
+                <br/>3. Kéo để điều chỉnh tốc độ đọc, càng cao đọc càng nhanh. Nếu muốn nghe thử 1 đoạn 1 khoảng 15s chọn nghe thử.
+                <br/>4. Khi ấn Tạo bản ghi, bản ghi của bạn sẽ được hiển thị phía bên tay phải. 
+            </div>
         </div>
         <div class="output w-30">
             <div class="title">Kết quả</div>
@@ -250,6 +258,23 @@
                 </div>
                 <a href="#" style="color:#c8b197; text-decoration: underline;">Nhập thông tin chi tiết</a>
             </div>
+        </div>
+        <div class="pending w-30">
+            <div class="img">
+                <img src="/img/audio_book/pending2.gif" alt="" class="w-100 h-100">
+            </div>
+            <div class="desc" style="text-align: center; 
+                font-size: 1.3rem; color:#cf9923; font-weight: bolder;">
+                Bạn chưa tạo bản ghi !!!
+                <div class="sub" style="margin: 2rem 0;font-style: italic; font-weight:lighter">
+                    👈Tạo bản ghi bằng cách nhập các thông số bên trái
+                </div>
+            </div>
+        </div>
+
+        <div class="loading w-30">
+            <div class="lds-ripple"><div></div><div></div></div>
+            <div class="desc" style="margin-top: 1.2rem;">Đang xử lý audio, vui lòng chờ ...</div>
         </div>
     </div>
 </section>
@@ -333,4 +358,4 @@
 
 <!-- handle input  -->
 
-<script src="/js/input_handler.js"></script>
+{{!-- <script src="/js/input_handler.js"></script> --}}
