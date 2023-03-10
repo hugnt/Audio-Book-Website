@@ -116,12 +116,12 @@ $( document ).ready(function() {
             }
         }
 
-        var file = fileInput[0].files[0];
+        // var file = fileInput[0].files[0];
         var voice = voiceInput.val();
         var speed = speedInput.val();
         var content = textInput.val();
 
-        console.log("file: "+file.name+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);
+        // console.log("file: "+file.name+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);
 
 
         //đọc file ra text truyền vào biến content
