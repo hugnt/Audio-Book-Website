@@ -127,16 +127,12 @@ $( document ).ready(function() {
         //đọc file ra text truyền vào biến content
 
 
-        if (content.trim()===""&&file.length === 0) {
+        if (content.trim()==="") {
             alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
             return;
         }
-        if(voice ===''){
+        if(voice ==='null'){
             voice = "banmai";
-        };
-        if(content.trim()===""){
-            alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
-            return;
         };
 
         $.ajax({
