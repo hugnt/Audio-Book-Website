@@ -116,12 +116,14 @@
             <div class="title">Sách của bạn</div>
             <div class="user-slides swiper">
                 <div class="list-books swiper-wrapper">
+                    <span id="tmp"></span>
                     <div class="book-item swiper-slide">
                         <div class="book-cover">
                             <img src="/img/audio_book/null.png" alt="" class="w-100 h-100">
                             <span class="action-more fa-solid fa-trash-can">
                             </span>
-                            <span class="action-listen fa-regular fa-circle-play" data-id="">
+                            <span class="action-listen fa-regular fa-circle-play" 
+                            data-audio="null" data-id="null">
                             </span>
                         </div>
                         <div class="book-name">NULL AUDIO</div>
@@ -241,11 +243,13 @@
             </div>
             <div class="action d-flex" style="margin-bottom: 1rem;">
                 <div class="on-air" style="margin-right: 1.5rem;">
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-primary" 
                         style="background-color:#c8b197 ; border: none; color: #000;">Nghe trên cửa sổ</button>
                 </div>
                 <div class="add-list">
-                    <button type="button" class="btn btn-danger">Thêm vào playlist</button>
+                    <button type="button" class="btn btn-danger"
+                    
+                    >Thêm vào playlist</button>
                 </div>
             </div>
             <div class="details">
@@ -314,11 +318,7 @@
             </div>
             <div id="player-content">
                 <div id="album-art">
-
                     <img src="/img/covers/ChiPheo-NamCao.png" class="active" id="_1">
-
-
-
                     <div id="buffer-box">Buffering ...</div>
                 </div>
                 <!-- <div class="player-option">
@@ -355,6 +355,7 @@
 
 <script src="/js/audio_book.js"></script>
 <script src="/js/audio_player.js"></script>
+
 
 <!-- handle input  -->
 

@@ -45,11 +45,9 @@ $(function () {
         playNextTrackButton = $("#play-next"),
         currIndex = -1;
 
-    //getAUdio - form book (class)
-    function getAudioBook(bookId) {
-        $('#album-art img').each(function () {
-            $(this).removeClass("active");
-        });
+
+    //handle fail and success
+    function handleContain(bookId) {
         var isContain = albumArtworks.findIndex((album) => album === "_" + bookId);
         if (isContain != -1) {
             $(`#album-art #_${bookId}`).addClass("active");
@@ -63,32 +61,52 @@ $(function () {
             trackName.text(currTrackName);
             $("#" + currArtwork).addClass("active");
             playPauseButton.click();
-            return;
+            return true;
         };
+        return false;
+    }
+
+    function handleAddtoPlayer(book) {
+        // Data is returned with array of objects -> to access item[0].<row_name>
+        albums.push(book.ten_sach);
+        trackNames.push(book.ten_tac_gia + " - " + book.ten_sach);
+        albumArtworks.push(book.id);
+        trackUrl.push(book.audio);
+
+        var listHTMLimg = `<img src="/img/covers/${book.bia_sach}" id="${book.id}" class="active" >`;
+        // selectTrack(albumArtworks.length-1);
+        currIndex = albumArtworks.length - 1;
+        currAlbum = albums[currIndex];
+        currTrackName = trackNames[currIndex];
+        currArtwork = albumArtworks[currIndex];
+        audio.src = trackUrl[currIndex];
+        albumName.text(currAlbum);
+        trackName.text(currTrackName);
+        $("#" + currArtwork).addClass("active");
+        playPauseButton.click();
+        $('#buffer-box').before(listHTMLimg);
+    }
+
+    //getAUdio - form book (class)
+    function getAudioBookDB(bookId) {
+        $('#album-art img').each(function () {
+            $(this).removeClass("active");
+        });
+        if (handleContain(bookId)) return;
         $.ajax({
             url: '/audio_book/' + bookId,
             type: 'GET',
             dataType: 'json',
             success: function (item) {
-                // Data is returned with array of objects -> to access item[0].<row_name>
-                albums.push(item[0].ten_sach);
-                trackNames.push(item[0].ten_tac_gia + " - " + item[0].ten_sach);
-                albumArtworks.push("_" + item[0].id);
-                trackUrl.push("../audio/" + item[0].audio);
+                var book = {
+                    ten_sach: item[0].ten_sach,
+                    ten_tac_gia: item[0].ten_tac_gia,
+                    id: "_" + item[0].id,
+                    bia_sach: item[0].bia_sach,
+                    audio: "../audio/" + item[0].audio
+                }
+                handleAddtoPlayer(book);
 
-                var listHTMLimg = `<img src="/img/covers/${item[0].bia_sach}" id="_${item[0].id}" class="active" >`;
-                // selectTrack(albumArtworks.length-1);
-                currIndex = albumArtworks.length - 1;
-                currAlbum = albums[currIndex];
-                currTrackName = trackNames[currIndex];
-                currArtwork = albumArtworks[currIndex];
-                audio.src = trackUrl[currIndex];
-                albumName.text(currAlbum);
-                trackName.text(currTrackName);
-                $("#" + currArtwork).addClass("active");
-                playPauseButton.click();
-
-                $('#buffer-box').before(listHTMLimg);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -98,16 +116,41 @@ $(function () {
 
     $('.section-banner .current-book-slides .book .action .btn-listen').click(function () {
         const bookId = $(this).data('id');
-        console.log("selectedBook: ", $(this).data('book'));
-        getAudioBook(bookId);
+        console.log("selectedBookDB: ", $(this).data('book'));
+        getAudioBookDB(bookId);
 
     });
     //getAUdio - trend book (class)
-    $('.section-trend .action-listen').click(function () {
+    $('.section-trend .top-trend .action-listen').click(function () {
         const bookId = $(this).data('id');
-        console.log("selectedBook: ", $(this).data('book'));
-        getAudioBook(bookId);
+        console.log("selectedBookDB: ", $(this).data('book'));
+        getAudioBookDB(bookId);
 
+    });
+
+    function bindingFunction(){
+        $('.section-trend .user-book .action-listen').click(function () {
+            const bookInfor = $(this).data('audio');;
+            console.log("selectedBookBrowser: ", bookInfor);
+            $('#album-art img').each(function () {
+                $(this).removeClass("active");
+            });
+            if (handleContain(bookInfor.id)) return;
+            var book = {
+                ten_sach: bookInfor.name,
+                ten_tac_gia: bookInfor.author,
+                id: "_" + bookInfor.id,
+                bia_sach: bookInfor.cover,
+                audio: bookInfor.url
+            }
+            handleAddtoPlayer(book);
+    
+        });
+    }
+   
+
+    $('.output .action .add-list .btn').click(function () {
+        bindingFunction();
     });
 
 

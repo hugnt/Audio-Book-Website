@@ -17,7 +17,7 @@ router.get('/audio_book', appController.audio_book);
 
 
 router.get('/audio_book/:id', audioController.getById);
-router.get('/audio_book/api/:content/:voice/:speed', audioController.getByAPI);
+router.post('/audio_book/api/:user_name/:audio_id', audioController.getByAPI);
 
 
 
