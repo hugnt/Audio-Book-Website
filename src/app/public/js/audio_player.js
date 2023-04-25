@@ -146,6 +146,10 @@ $(function () {
             handleAddtoPlayer(book);
     
         });
+
+        $('.section-trend .user-book .action-trash').click(function(){
+            $(this).closest('.book-item').remove();
+        });
     }
    
 

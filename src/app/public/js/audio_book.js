@@ -9,15 +9,22 @@ $(document).ready(function () {
     const speedInput = $('.op-speed input');
     const submitBtn = $(".btn-confirm-text");
     const userListBook = $('.section-trend .user-book .list-books #tmp');
+    var recordType="Bản nghe thử";
 
-   
+    // setPending(false);
+    // setOutput(true);
+    // setInput(false);
+    // setLoading(false);
 
     var audioInfo = {
         id: "uaid_0",
         name: "My audio book",
         url: "",
         author: "Nam Nguyễn",
-        cover: "null.png"
+        cover: "null.png",
+        speed:"",
+        voice:"",
+        inputType:""
     };
 
     var validate = {
@@ -109,6 +116,7 @@ $(document).ready(function () {
         validate.isInput = false;
     });
 
+    //generate audio full
     $('.excute-audio button').click(function (e) {
         e.preventDefault();
         setPending(false);
@@ -127,13 +135,16 @@ $(document).ready(function () {
             }
         }
 
-        // var file = fileInput[0].files[0];
+        //var file = fileInput[0].files[0];
         var voice = voiceInput.val();
         var speed = speedInput.val();
         var content = textInput.val();
 
-        // console.log("file: "+file.name+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);
+    
+        // const fileInfo = fileInput.prop("files")[0]
+        // console.log(URL.createObjectURL(fileInfo));
 
+        // console.log("file: "+file.name+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);     
 
         //đọc file ra text truyền vào biến content
         if (content.trim() === "") {
@@ -143,45 +154,19 @@ $(document).ready(function () {
         if (voice === 'null') {
             voice = "banmai";
         };
+        //add infor to details popup
+        var typeInput = "Nhập văn bản";
+        if(!textInput.val()) typeInput="File văn bản";
+        $('#detailsInforModal #inputType').val(typeInput);
+        $('#detailsInforModal #voice').val(voice);
+        $('#detailsInforModal #speed').val(speed);
+
+        recordType="Bản ghi full";
 
         audioInfo.author = "hungnt";
         audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
-
-        $.ajax({
-            url: `/audio_book/api/${audioInfo.name}/${audioInfo.id}`,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ content, voice, speed }),
-            success: function (response) {
-                checkValidUrl(response.audioUrl, 0, function (isValid) {
-                    if (isValid) {
-                        setPending(false);
-                        setLoading(false);
-                        setInput(true);
-                        setOutput(true);
-                        audioOutput.attr('src', response.audioUrl);
-                    }
-                    else {
-                        console.log("Gãy...");
-                    }
-                });
-                // setTimeout(()=>{
-                //     setPending(false);
-                //     setLoading(false);
-                //     setInput(true);
-                //     setOutput(true);
-                //     audioOutput.attr('src', response.audioUrl);
-                // },3000);
-
-
-            },
-            error: function (xhr, status, error) {
-                setLoading(true);
-                // setPending(true);
-                setInput(true);
-                console.log("ERR received response from SERVER: ",error);
-            }
-        });
+        ajaxPOST(content, voice, speed);
+  
     });
     function checkValidUrl(url, time, callback) {
         $.ajax({
@@ -208,6 +193,74 @@ $(document).ready(function () {
         });
     }
 
+    //generate trial audio
+    $('.try-listen button').click(function(e){
+        e.preventDefault();
+        setPending(false);
+        setOutput(false);
+        setInput(false);
+        setLoading(true);
+
+        for (const [key, value] of Object.entries(validate)) {
+            console.log(`${key}: ${value}`);
+            if (value == false) {
+                alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key);
+                setLoading(false);
+                setPending(true);
+                setInput(true);
+                return;
+            }
+        }
+        var voice = voiceInput.val();
+        var speed = speedInput.val();
+        var content = textInput.val();
+        content = content.substring(0, 50);
+        if (content.trim() === "") {
+            alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
+            return;
+        }
+        if (voice === 'null') {
+            voice = "banmai";
+        };
+        recordType="Bản nghe thử";
+        ajaxPOST(content, voice, speed);
+    });
+
+    //ajax POST to get audio url
+    function ajaxPOST(content, voice, speed){
+        $.ajax({
+            url: `/audio_book/api/${audioInfo.name}/${audioInfo.id}`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ content, voice, speed }),
+            success: function (response) {
+                checkValidUrl(response.audioUrl, 0, function (isValid) {
+                    if (isValid) {
+                        setPending(false);
+                        setLoading(false);
+                        setInput(true);
+                        setOutput(true);
+                        audioOutput.attr('src', response.audioUrl);
+                        audioInfo.url =  response.audioUrl;
+                        audioInfo.voice=voice;
+                        audioInfo.speed=speed;
+                    }
+                    else {
+                        console.log("Gãy...");
+                    }
+                });
+
+            },
+            error: function (xhr, status, error) {
+                setLoading(true);
+                // setPending(true);
+                setInput(true);
+                console.log("ERR received response from SERVER: ",error);
+            }
+        });
+    }
+
+    //ADD TO LIST
     var n = 0;
     $('.output .action .add-list .btn').on("click", function () {
         // e.preventDefault();
@@ -228,7 +281,7 @@ $(document).ready(function () {
             <div class="book-item swiper-slide" >
                 <div class="book-cover">
                     <img src="/img/audio_book/${audioInfo.cover}" alt="NULL img" class="w-100 h-100">
-                    <span class="action-more fa-solid fa-trash-can">
+                    <span class="action-more action-trash fa-solid fa-trash-can">
                     </span>
                     <span class="action-listen fa-regular fa-circle-play" 
                     data-id='${audioInfo.id}' data-audio='${audioInfoJSON}'>
@@ -237,11 +290,24 @@ $(document).ready(function () {
                 <div class="book-name">${audioInfo.name}</div>
             </div>
             `
-
+            
             userListBook.after(bookItemHtml);
         }
     });
-    //ADD TO LIST
+
+
+    //POPUP Handler
+    $("#detailsInforModal #saveDetails").click(function(e){
+        e.preventDefault();
+        audioInfo.inputType =  $('#detailsInforModal #inputType').val();
+        audioInfo.name = $('#detailsInforModal #bookName').val();
+        audioInfo.author = $('#detailsInforModal #author').val();
+        $('.section-studio .output .details .book-name').text("- Tên sách: "+audioInfo.name);
+        $('.section-studio .output .details .author').text("- Tác giả: "+audioInfo.author);
+        console.log(audioInfo);
+    });
+
+    
     function setLoading(on) {
         if (on === true) {
             $('.section-studio .loading').css("display", "flex");
@@ -260,6 +326,7 @@ $(document).ready(function () {
     }
     function setOutput(on) {
         if (on === true) {
+            $('.section-studio .output .title').text("Kết quả ("+recordType+")");
             $('.section-studio .output').css("display", "block");
         }
         else {
@@ -269,16 +336,22 @@ $(document).ready(function () {
 
     function setInput(on) {
         if (on === true) {
+            $('.section-studio .input').css("pointer-events", "auto");
             $('.section-studio .input').prop("disabled", false);
             $('.section-studio .input').css("opacity", "1");
         }
         else {
+            $('.section-studio .input').css("pointer-events", "none");
             $('.section-studio .input').prop("disabled", true);
             $('.section-studio .input').css("opacity", "0.5");
         }
     }
 
 
+
+    //OTHER TOOLS
+
+    
 
 });
 

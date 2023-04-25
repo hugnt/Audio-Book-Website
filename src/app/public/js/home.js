@@ -157,3 +157,6 @@ $('.bi-lightbulb-off-fill').click(function(){
     $('.search-box .select-option').toggleClass('select-option-light-mode');
 });
 
+
+
+    
