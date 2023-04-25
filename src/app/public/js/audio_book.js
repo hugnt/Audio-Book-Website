@@ -1,6 +1,3 @@
-// const {Book} = require('../../models/Book');
-
-
 $(document).ready(function () {
     var audioOutput = $(".section-studio .output .audio-res audio");
     const fileInput = $(".section-studio .input .custom-file-input");
@@ -146,6 +143,31 @@ $(document).ready(function () {
 
         // console.log("file: "+file.name+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);     
 
+        console.log("file: "+fileInput.val()+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);
+        // Tranfer pdf file to text
+        // Tải tệp PDF
+        const url = "../pdf/test.pdf";
+        const loadingTask = pdfjsLib.getDocument(url);
+        // Trích xuất văn bản từ tất cả các trang của tệp PDF
+        loadingTask.promise.then((pdf) => {
+          let text = '';
+          const maxPages = pdf.numPages;
+        
+          // Duyệt qua tất cả các trang của tệp PDF
+          for (let pageNumber = 1; pageNumber <= maxPages; pageNumber++) {
+            pdf.getPage(pageNumber).then((page) => {
+              // Trích xuất văn bản từ trang hiện tại
+              page.getTextContent().then((textContent) => {
+                // Thêm văn bản vào biến text
+                text += '\n' + textContent.items.map((s) => s.str).join('');
+                if (pageNumber === maxPages) {
+                  // Hiển thị kết quả trích xuất văn bản dưới dạng text
+                  console.log(text);
+                }
+              });
+            });
+          }
+        });
         //đọc file ra text truyền vào biến content
         if (content.trim() === "") {
             alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
