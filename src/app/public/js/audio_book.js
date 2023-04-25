@@ -1,3 +1,5 @@
+// const { text } = require("body-parser");
+
 $(document).ready(function () {
     var audioOutput = $(".section-studio .output .audio-res audio");
     const fileInput = $(".section-studio .input .custom-file-input");
@@ -6,7 +8,7 @@ $(document).ready(function () {
     const speedInput = $('.op-speed input');
     const submitBtn = $(".btn-confirm-text");
     const userListBook = $('.section-trend .user-book .list-books #tmp');
-    var recordType="Bản nghe thử";
+    var recordType = "Bản nghe thử";
 
     // setPending(false);
     // setOutput(true);
@@ -19,9 +21,10 @@ $(document).ready(function () {
         url: "",
         author: "Nam Nguyễn",
         cover: "null.png",
-        speed:"",
-        voice:"",
-        inputType:""
+        speed: "",
+        voice: "",
+        inputType: "",
+        user_name:"hungnt"
     };
 
     var validate = {
@@ -32,11 +35,8 @@ $(document).ready(function () {
 
     //input tag
     $('#inputGroupFile04').on('change', function () {
-        //get the file name
-        var fileName = $(this).val();
-        fileName = $(this).val().replace('C:\\fakepath\\', " ");
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
+    
+        $(this).next('.custom-file-label').html(fileInput.prop("files")[0].name);
     })
 
     //btn - confirm
@@ -44,6 +44,7 @@ $(document).ready(function () {
         // console.log($(this).closest('.confirm-box').find('.icon-check').attr("class"));
         $(this).closest('.confirm-box').find('.icon-check').css("display", "block");
         if ($(this).closest('.op-file').length != 0) {
+            console.log("Helel");
             validate.isInput = true;
         }
         else if ($(this).closest('.op-voice').length != 0) {
@@ -113,82 +114,40 @@ $(document).ready(function () {
         validate.isInput = false;
     });
 
+
     //generate audio full
-    $('.excute-audio button').click(function (e) {
+    $('.excute-audio button').click(async function (e) {
         e.preventDefault();
-        setPending(false);
-        setOutput(false);
-        setInput(false);
-        setLoading(true);
+        try {
+            //validation
+            if(!isConfirmInput()) return;
+            if(!isValidInput()) return;
 
-        for (const [key, value] of Object.entries(validate)) {
-            console.log(`${key}: ${value}`);
-            if (value == false) {
-                alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key);
-                setLoading(false);
-                setPending(true);
-                setInput(true);
-                return;
-            }
+            //display loading
+            setPending(false);
+            setOutput(false);
+            setInput(false);
+            setLoading(true);
+            recordType = "Bản ghi full";
+
+            //var file = fileInput[0].files[0];
+            var voice = voiceInput.val();
+            var speed = speedInput.val();
+            var content = await getContent();
+           
+            //add infor to details popup
+            var typeInput = "Nhập văn bản";
+            if (!textInput.val()) typeInput = "File văn bản";
+            $('#detailsInforModal #inputType').val(typeInput);
+            $('#detailsInforModal #voice').val(voice);
+            $('#detailsInforModal #speed').val(speed);
+
+            //get audio url by calling API
+            ajaxPOST(content, voice, speed);
+
+        } catch (err) {
+            console.error(err);
         }
-
-        //var file = fileInput[0].files[0];
-        var voice = voiceInput.val();
-        var speed = speedInput.val();
-        var content = textInput.val();
-
-    
-        // const fileInfo = fileInput.prop("files")[0]
-        // console.log(URL.createObjectURL(fileInfo));
-
-        // console.log("file: "+file.name+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);     
-
-        console.log("file: "+fileInput.val()+"\ncontent: "+content+"\nvoice: "+voice+"\nspeed: "+speed);
-        // Tranfer pdf file to text
-        // Tải tệp PDF
-        const url = "../pdf/test.pdf";
-        const loadingTask = pdfjsLib.getDocument(url);
-        // Trích xuất văn bản từ tất cả các trang của tệp PDF
-        loadingTask.promise.then((pdf) => {
-          let text = '';
-          const maxPages = pdf.numPages;
-        
-          // Duyệt qua tất cả các trang của tệp PDF
-          for (let pageNumber = 1; pageNumber <= maxPages; pageNumber++) {
-            pdf.getPage(pageNumber).then((page) => {
-              // Trích xuất văn bản từ trang hiện tại
-              page.getTextContent().then((textContent) => {
-                // Thêm văn bản vào biến text
-                text += '\n' + textContent.items.map((s) => s.str).join('');
-                if (pageNumber === maxPages) {
-                  // Hiển thị kết quả trích xuất văn bản dưới dạng text
-                  console.log(text);
-                }
-              });
-            });
-          }
-        });
-        //đọc file ra text truyền vào biến content
-        if (content.trim() === "") {
-            alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
-            return;
-        }
-        if (voice === 'null') {
-            voice = "banmai";
-        };
-        //add infor to details popup
-        var typeInput = "Nhập văn bản";
-        if(!textInput.val()) typeInput="File văn bản";
-        $('#detailsInforModal #inputType').val(typeInput);
-        $('#detailsInforModal #voice').val(voice);
-        $('#detailsInforModal #speed').val(speed);
-
-        recordType="Bản ghi full";
-
-        audioInfo.author = "hungnt";
-        audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
-        ajaxPOST(content, voice, speed);
-  
     });
     function checkValidUrl(url, time, callback) {
         $.ajax({
@@ -216,40 +175,43 @@ $(document).ready(function () {
     }
 
     //generate trial audio
-    $('.try-listen button').click(function(e){
+    $('.try-listen button').click(async function (e) {
         e.preventDefault();
-        setPending(false);
-        setOutput(false);
-        setInput(false);
-        setLoading(true);
+        try {
+            //validation
+            if(!isConfirmInput()) return;
+            if(!isValidInput()) return;
 
-        for (const [key, value] of Object.entries(validate)) {
-            console.log(`${key}: ${value}`);
-            if (value == false) {
-                alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key);
-                setLoading(false);
-                setPending(true);
-                setInput(true);
-                return;
-            }
+            //display loading
+            setPending(false);
+            setOutput(false);
+            setInput(false);
+            setLoading(true);
+            recordType = "Bản nghe thử";
+
+            //var file = fileInput[0].files[0];
+            var voice = voiceInput.val();
+            var speed = speedInput.val();
+            //chỉ cho nghe 100 kí tự dầu
+            var content = await getContent();
+            content = content.substring(0, 50);
+            //add infor to details popup
+            var typeInput = "Nhập văn bản";
+            if (!textInput.val()) typeInput = "File văn bản";
+            $('#detailsInforModal #inputType').val(typeInput);
+            $('#detailsInforModal #voice').val(voice);
+            $('#detailsInforModal #speed').val(speed);
+
+            //get audio url by calling API
+            ajaxPOST(content, voice, speed);
+
+        } catch (err) {
+            console.error(err);
         }
-        var voice = voiceInput.val();
-        var speed = speedInput.val();
-        var content = textInput.val();
-        content = content.substring(0, 50);
-        if (content.trim() === "") {
-            alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
-            return;
-        }
-        if (voice === 'null') {
-            voice = "banmai";
-        };
-        recordType="Bản nghe thử";
-        ajaxPOST(content, voice, speed);
     });
 
     //ajax POST to get audio url
-    function ajaxPOST(content, voice, speed){
+    function ajaxPOST(content, voice, speed) {
         $.ajax({
             url: `/audio_book/api/${audioInfo.name}/${audioInfo.id}`,
             type: 'POST',
@@ -263,9 +225,11 @@ $(document).ready(function () {
                         setInput(true);
                         setOutput(true);
                         audioOutput.attr('src', response.audioUrl);
-                        audioInfo.url =  response.audioUrl;
-                        audioInfo.voice=voice;
-                        audioInfo.speed=speed;
+                        audioInfo.url = response.audioUrl;
+                        audioInfo.voice = voice;
+                        audioInfo.speed = speed;
+                        audioInfo.author = "hungnt";
+                        audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
                     }
                     else {
                         console.log("Gãy...");
@@ -277,9 +241,108 @@ $(document).ready(function () {
                 setLoading(true);
                 // setPending(true);
                 setInput(true);
-                console.log("ERR received response from SERVER: ",error);
+                console.log("ERR received response from SERVER: ", error);
             }
         });
+    }
+
+    function isConfirmInput() {
+        for (const [key, value] of Object.entries(validate)) {
+            console.log(`${key}: ${value}`);
+            if (value == false) {
+                alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key);
+                setLoading(false);
+                setPending(true);
+                setInput(true);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function isValidInput() {
+        var inputCheck = {
+            voice: voiceInput.val(),
+            speed: speedInput.val(),
+            content: 0
+        }
+        if (inputCheck.voice === 'null') {
+            inputCheck.voice = "banmai";
+        };
+        var contentType = $("input[name='upload']:checked");
+        if (contentType.val() == 1) {
+            console.log("FILE");
+            var fileInput = $("#inputGroupFile04")[0].files[0];
+            if (!fileInput) {
+                alert("Vui lòng chọn một file!");
+                return false;
+            } else if (!fileInput.name.match(/\.(pdf|docx)$/i)) {
+                alert("Vui lòng chỉ chọn file pdf hoặc docx!");
+                return false;
+            } else {
+                console.log("OKOKO");
+            }
+        }
+        else if (contentType.val() == 2) {
+            console.log("TEXT");
+            if (textInput.val().trim() === "") {
+                alert("Không có thông tin để đọc hoặc chưa ấn xác nhận tại mỗi lựa chọn");
+                return false;
+            }
+        }
+        return true;
+
+    }
+    //tranfer PDF -> TEXT
+    async function convertPDFtoText(url) {
+        try {
+            const loadingTask = pdfjsLib.getDocument(url);
+            let text = '';
+            const pdf = await loadingTask.promise;
+            const maxPages = pdf.numPages;
+            for (let pageNumber = 1; pageNumber <= maxPages; pageNumber++) {
+                const page = await pdf.getPage(pageNumber);
+                const textContent = await page.getTextContent();
+                text += '\n' + textContent.items.map((s) => s.str).join('');
+            }
+            return text;
+        } catch (error) {
+            throw err;
+        }
+    }
+    async function getContent(){
+        try {
+            var contentType = $("input[name='upload']:checked");
+            if (contentType.val() == 1) {;
+                var formData = new FormData();
+                var fileName = fileInput.prop("files")[0].name;
+                formData.append("uploadFile", fileInput.prop("files")[0]);
+                // console.log(formData);
+                $.ajax({
+                    url: `/uploadFile/${audioInfo.user_name}`,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                      console.log(response);
+                    },
+                    error: function(error) {
+                      console.log(error);
+                    }
+                });
+                const url = `../clientFiles/${audioInfo.user_name}/${fileName}`;
+                const text = await convertPDFtoText(url);
+                return text;
+            }
+            else if (contentType.val() == 2) {
+                return textInput.val();
+            }
+        } catch (error) {
+            console.log("getContent-ERROR: "+error);    
+            return "Xin chào";
+        }
+
     }
 
     //ADD TO LIST
@@ -292,7 +355,7 @@ $(document).ready(function () {
         // },2000);
         // setLoading(false);
         // setInput(true);
-       
+
         console.log("check");
         if (audioOutput.attr('src') != '') {
             n++;
@@ -312,24 +375,24 @@ $(document).ready(function () {
                 <div class="book-name">${audioInfo.name}</div>
             </div>
             `
-            
+
             userListBook.after(bookItemHtml);
         }
     });
 
 
     //POPUP Handler
-    $("#detailsInforModal #saveDetails").click(function(e){
+    $("#detailsInforModal #saveDetails").click(function (e) {
         e.preventDefault();
-        audioInfo.inputType =  $('#detailsInforModal #inputType').val();
+        audioInfo.inputType = $('#detailsInforModal #inputType').val();
         audioInfo.name = $('#detailsInforModal #bookName').val();
         audioInfo.author = $('#detailsInforModal #author').val();
-        $('.section-studio .output .details .book-name').text("- Tên sách: "+audioInfo.name);
-        $('.section-studio .output .details .author').text("- Tác giả: "+audioInfo.author);
+        $('.section-studio .output .details .book-name').text("- Tên sách: " + audioInfo.name);
+        $('.section-studio .output .details .author').text("- Tác giả: " + audioInfo.author);
         console.log(audioInfo);
     });
 
-    
+
     function setLoading(on) {
         if (on === true) {
             $('.section-studio .loading').css("display", "flex");
@@ -348,7 +411,7 @@ $(document).ready(function () {
     }
     function setOutput(on) {
         if (on === true) {
-            $('.section-studio .output .title').text("Kết quả ("+recordType+")");
+            $('.section-studio .output .title').text("Kết quả (" + recordType + ")");
             $('.section-studio .output').css("display", "block");
         }
         else {
@@ -373,7 +436,7 @@ $(document).ready(function () {
 
     //OTHER TOOLS
 
-    
+
 
 });
 
