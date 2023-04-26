@@ -1,8 +1,8 @@
-{{!-- css  --}}
+{{!-- css --}}
 <link rel="stylesheet" href="/css/bookstore.css">
 <link rel="stylesheet" href="/css/popup.css">
 
-{{!-- main - page  --}}
+{{!-- main - page --}}
 <section class="bookstore" id="#section">
     <div class="search">
         <div class="byName">
@@ -13,13 +13,10 @@
             <h1>Choose a book format</h1>
             <div class="select">
                 <select>
-                    <option value="0">All</option>
-                    <option value="1">Mark Twain</option>
-                    <option value="2">Fyodor Tyutchev</option>
-                    <option value="3">Alexander Puskin</option>
-                    <option value="4">Mikhail Lermontov</option>
-                    <option value="5">Karolina Pavlova</option>
-                    <option value="6">Khomyakov Avtoportret</option>
+                    <option>All</option>
+                    {{#each authors}}
+                    <option data-id="{{this.ten_tac_gia}}">{{this.ten_tac_gia}}</option>
+                    {{/each}}
                 </select>
             </div>
         </div>
@@ -32,10 +29,11 @@
         <div class="cart ">
             <h2 class="cart-title">Your Cart</h2>
             <div class="cart-content">
+
             </div>
             <div class="total">
                 <div class="total-title">Total</div>
-                <div class="total-price">$0</div>
+                <div class="total-price">0đ</div>
             </div>
             <button type="button" class="btn-buy">Buy Now</button>
             <i class="bi bi-x-lg " id="close-cart"></i>
@@ -50,7 +48,30 @@
                 </h1>
                 <div class="product">
                     <ul class="listProduct">
-
+                        {{#each books}}
+                        <li class="product-card" data-author="{{this.ten_tac_gia}}">
+                            <div class="badge">Hot</div>
+                            <div class="product-tumb">
+                                <img src="/img/covers/{{this.bia_sach}}" alt="">
+                            </div>
+                            <div class="product-details">
+                                <span class="product-catagory">{{this.ten_tac_gia}}</span>
+                                <h4 class="book-title"><a href="#">{{this.ten_sach}}</a></h4>
+                                <p>{{this.mo_ta}}</p>
+                                <div class="product-bottom-details">
+                                    <div class="product-price"><small>90.000 đ</small>{{this.gia_sach}} đ</div>
+                                    <div class="product-links">
+                                        <a class="book-card" href="#movie-card" data-id="{{this.id}}">
+                                            <i class="bi bi-balloon-heart"></i>
+                                        </a>
+                                        <a class="addcart" href="#" data-id="{{this.id}}">
+                                            <i class="bi bi-cart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
                     </ul>
                 </div>
             </div>
@@ -58,8 +79,72 @@
 
     </div>
 </section>
+
+{{!-- Popup --}}
 <div class="movie-card" id="movie-card">
+    <div class="container-popup">
+        <a href="#section"><i class="bi bi-x-circle"></i></a>
+        <a class="book-img" href="#">
+            <div class="img-before"></div>
+        </a>
+        <div class="hero">
+
+            <div class="details">
+
+                <div class="title1"> </div>
+
+                <div class="title2"> </div>
+
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
+                        title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half"
+                        for="star4half" title="Pretty good - 4.5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" checked /><label class="full" for="star4"
+                        title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half"
+                        for="star3half" title="Meh - 3.5 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
+                        title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half"
+                        for="star2half" title="Kinda bad - 2.5 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
+                        title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half"
+                        for="star1half" title="Meh - 1.5 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
+                        title="Sucks big time - 1 star"></label>
+                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf"
+                        title="Sucks big time - 0.5 stars"></label>
+                </fieldset>
+
+                <span class="icon-star fa-regular fa-star-half-stroke">
+                    <span class="desc"> </span>
+                    <span class="rate-desc"> </span>
+                </span>
+
+            </div>
+
+        </div>
+        <div class="description">
+
+            <div class="column1">
+                <span class="title-tag">Thể loại: </span>
+                <span class="tag"> </span>
+            </div>
+
+            <div class="column2">
+
+                <p> </p>
+
+            </div>
+        </div>
+
+
+    </div>
 </div>
+
+
 
 <!-- script end movie-card -->
 <script src="/js/bookstore.js"></script>

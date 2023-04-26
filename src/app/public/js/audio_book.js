@@ -255,4 +255,7 @@ var swiper3 = new Swiper(".user-slides", {
 });
 
 
-
+// var n= 0;
+// $('.output .action .add-list .btn').on("click", function () {
+//     console.log("check");
+// });

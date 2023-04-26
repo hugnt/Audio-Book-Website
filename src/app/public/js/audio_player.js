@@ -70,6 +70,7 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (item) {
+                // alert(bookId);
                 // Data is returned with array of objects -> to access item[0].<row_name>
                 albums.push(item[0].ten_sach);
                 trackNames.push(item[0].ten_tac_gia + " - " + item[0].ten_sach);
@@ -95,6 +96,12 @@ $(function () {
             }
         });
     }
+    $('.book-item .btn-listen').click(function () {
+        const bookId = $(this).data('id');
+        console.log("selectedBook: ", $(this).data('book'));
+        getAudioBook(bookId);
+
+    });
 
     $('.section-banner .current-book-slides .book .action .btn-listen').click(function () {
         const bookId = $(this).data('id');

@@ -101,6 +101,8 @@ option {
 .wrap .button:active {
   transform: scale(0.9); }
 
+
+
 .shelves {
   /* display: flex; */
   width: 100%; }
@@ -132,6 +134,7 @@ option {
   font-size: 3rem;
   margin-left: 30%; }
 
+
 .title-product {
   font-family: 'Courier New', Courier, monospace;
   font-weight: 600;
@@ -155,6 +158,7 @@ option {
   display: none; }
 
 .listProduct {
+  width: 85%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap; }
@@ -249,7 +253,11 @@ a {
   font-size: 10px;
   line-height: 16px;
   margin-bottom: 14px;
-  color: #999; }
+  color: #999; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  }
 
 .product-bottom-details {
   overflow: hidden;

@@ -45,10 +45,17 @@ class AppController {
         .catch(next); 
     };
 
-    bookstore(req, res) {
-        res.render('bookstore');
-    };
-
+    bookstore(req, res, next) {
+        Promise.all([Book.getBooks({}), Author.getAuthors({})])
+            .then((results)=>{
+                res.render('bookstore',{
+                    books:results[0],
+                    authors: results[1]
+                });
+            })
+            .catch(next); 
+    }
+// 
     challenge(req, res) {
         res.render('challenge');
     };

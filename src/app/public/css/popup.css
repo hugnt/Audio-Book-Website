@@ -1,20 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
 /* *, *:before, *:after {
   box-sizing: border-box;
 } */
 .container-popup a {
   text-decoration: none;
-  color: #5C7FB8; }
+  color: #5C7FB8;
+}
 
 .container-popup a:hover {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .container-popup a img {
-  margin-top: 5rem;
+  margin-top: 4rem;
   height: 16rem;
   width: 187px;
-  box-shadow: 1rem 1rem black; }
+  box-shadow: 1rem 1rem black;
+}
 
 .movie-card {
   font: 14px/22px "Lato", Arial, sans-serif;
@@ -30,7 +34,8 @@
   z-index: 9999;
   opacity: 0;
   visibility: hidden;
-  transition: all .5s; }
+  transition: all .5s;
+}
 
 .container-popup {
   margin: 0 auto;
@@ -40,7 +45,8 @@
   border-radius: 2rem;
   position: relative;
   opacity: 0;
-  transform: scale(0.5); }
+  transform: scale(0.5);
+}
 
 .hero {
   height: 342px;
@@ -49,9 +55,10 @@
   overflow: hidden;
   z-index: 1;
   border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem; }
+  border-top-right-radius: 2rem;
+}
 
-.hero::before {
+/* .hero::before {
   content: '';
   width: 100%;
   height: 100%;
@@ -59,7 +66,6 @@
   overflow: hidden;
   top: 0;
   left: 0;
-  /* background:red; */
   background-image: var(--beforeBack, url("../images/author_ava/Alexander_Puskin.png"));
   background-repeat: no-repeat;
   background-size: cover;
@@ -67,13 +73,15 @@
   z-index: -1;
   transform: skewY(-2.2deg);
   transform-origin: 0 0;
-  -webkit-backface-visibility: hidden; }
+  -webkit-backface-visibility: hidden;
+} */
 
 .cover {
   position: absolute;
   top: 160px;
   left: 40px;
-  z-index: 2; }
+  z-index: 2;
+}
 
 .details .title1 span {
   position: absolute;
@@ -83,31 +91,37 @@
   border-radius: 2rem;
   color: #544C21;
   font-size: 14px;
-  padding: 0px 4px; }
+  padding: 0px 4px;
+}
 
 .details .title1 {
   color: black;
   font-size: 44px;
   margin-bottom: 13px;
-  position: relative; }
+  position: relative;
+}
 
 .details .title2 {
   color: #C7C1BA;
   font-size: 23px;
   font-weight: 300;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+}
 
 .details .likes {
-  margin-left: 24px; }
+  margin-left: 24px;
+}
 
 .details .likes:before {
   content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/icon_like.png");
   position: relative;
   top: 2px;
-  padding-right: 7px; }
+  padding-right: 7px;
+}
 
 .details {
-  padding: 190px 0 0 280px; }
+  padding: 190px 0 0 280px;
+}
 
 .description {
   bottom: 0px;
@@ -115,14 +129,20 @@
   font-size: 16px;
   line-height: 26px;
   color: #B1B0AC;
-  display: flex; }
+  display: flex;
+}
 
 .column1 {
-  padding-left: 50px;
+  padding-left: 30px;
   padding-top: 120px;
   width: 220px;
   float: left;
-  text-align: center; }
+  text-align: center;
+}
+
+.title-tag {
+  color: black;
+}
 
 .tag {
   background: black;
@@ -131,111 +151,79 @@
   font-size: 14px;
   margin-right: 4px;
   line-height: 35px;
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .tag:hover {
-  background: rgba(159, 92, 92, 0.8); }
+  background: rgba(159, 92, 92, 0.8);
+}
 
 .column2 {
-  padding-left: 30px;
-  padding-top: 30px;
+  padding-left: 15px;
+  /* padding-top: 30px; */
   margin-left: 15px;
   width: 480px;
-  float: left; }
+  float: left;
+}
 
 .column2 p {
-  color: black; }
+  color: black;
+}
 
-fieldset, label {
+fieldset,
+label {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 /****** Style Star Rating Widget *****/
 .rating {
   border: none;
-  float: left; }
+  float: left;
+}
 
-.rating > input {
-  display: none; }
+.rating>input {
+  display: none;
+}
 
-.rating > label:before {
+.rating>label:before {
   margin: 5px;
   margin-top: 0;
   font-size: 1em;
   font-family: FontAwesome;
   display: inline-block;
-  content: "\f005"; }
+  content: "\f005";
+}
 
-.rating > .half:before {
+.rating>.half:before {
   content: "\f089";
-  position: absolute; }
+  position: absolute;
+}
 
-.rating > label {
+.rating>label {
   color: #ddd;
-  float: right; }
+  float: right;
+}
 
-.rating > input:checked ~ label,
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-  color: #FFD700; }
+.rating>input:checked~label,
+.rating:not(:checked)>label:hover,
+.rating:not(:checked)>label:hover~label {
+  color: #FFD700;
+}
 
 /* hover previous stars in list */
 /* .rating > input:checked + label:hover, /* hover current star when changing rating */
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label,
-.rating > input:checked ~ label:hover ~ label {
-  color: #FFED85; }
-
-/* 
-a[data-tooltip] {
-  position: relative;
-}
-a[data-tooltip]::before,
-a[data-tooltip]::after {
-  position: absolute;
-  display: none;
-  opacity: 0.85;
-}
-a[data-tooltip]::before {
-
-  content: attr(data-tooltip);
-  background: #000;
-  color: #fff;
-  font-size: 13px;
-  padding: 5px;
-  border-radius: 2rem;
-  white-space: nowrap;
-  text-decoration: none;
-}
-a[data-tooltip]::after {
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  content: '';
+.rating>input:checked~label:hover,
+.rating>label:hover~input:checked~label,
+.rating>input:checked~label:hover~label {
+  color: #FFED85;
 }
 
-a[data-tooltip]:hover::before,
-a[data-tooltip]:hover::after {
-  display: block;
-}
-
-
-a[data-tooltip][data-placement="top"]::before {
-  bottom: 100%;
-  left: 0;
-  margin-bottom: 40px;
-}
-a[data-tooltip][data-placement="top"]::after {
-  border-top-color: #000;
-  border-bottom: none;
-  bottom: 50px;
-  left: 20px;
-  margin-bottom: 4px;
-}  */
 /*mo popup*/
 .movie-card:target {
   opacity: 1;
-  visibility: visible; }
+  visibility: visible;
+}
 
 .movie-card:target .container-popup {
   opacity: 1;
@@ -248,8 +236,24 @@ a[data-tooltip][data-placement="top"]::after {
   right: 0;
   margin-top: 1rem;
   margin-right: 1rem;
-  font-size: 1.5rem; }
+  font-size: 1.5rem;
+}
 
 .bi-x-circle:hover {
   color: #5C7FB8;
-  cursor: pointer; }
+  cursor: pointer;
+}
+
+.icon-star {
+  padding-left: 1rem;
+  color: #FFD700;
+}
+
+.desc {
+  color: black;
+}
+
+.rate-desc {
+  color: #808080;
+  padding-left: 0.5rem;
+}

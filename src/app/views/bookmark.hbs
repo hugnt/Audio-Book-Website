@@ -1,6 +1,8 @@
 {{!-- css --}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 <link rel="stylesheet" href="/css/bookmark.css">
+<link rel="stylesheet" href="/css/audio_player.css">
+
 
 {{!-- main - page --}}
 <section class="section-banner">
@@ -19,7 +21,7 @@
             <div class="swiper-pagination" style="color: #E50914 ;"></div>
         </div>
 
-        
+
         <div class="infor-books slide-infor-books w-60">
             <ul class="menu-info  d-flex">
                 <li class="info-item">Mô tả</li>
@@ -40,18 +42,20 @@
                                 </div>
                                 <div class="language">
 
-                                    <span><i class="fa-solid fa-earth-americas"
-                                            style="margin-right:.5rem ;"></i>Ngôn ngữ:
+                                    <span><i class="fa-solid fa-earth-americas" style="margin-right:.5rem ;"></i>Ngôn
+                                        ngữ:
                                         Tiếng Việt</span>
                                 </div>
                                 <p class="summary">{{this.mo_ta}}</p>
                                 <div class="btn-action">
-                                    <button class="btn-read"><i class="fa-solid fa-book-open-reader"></i>Đọc ngay</button>
+                                    <button class="btn-read"><i class="fa-solid fa-book-open-reader"></i>Đọc
+                                        ngay</button>
                                     <button class="btn-add"><i class="fa-solid fa-plus"></i>Thêm vào danh sách</button>
                                     <button class="btn-like"><i class="fa-solid fa-thumbs-up"></i></button>
                                 </div>
                                 <article class="about_author">
-                                    <span class="main-title" style="margin:1rem 0; display: block;">{{this.ten_tac_gia}}</span>
+                                    <span class="main-title"
+                                        style="margin:1rem 0; display: block;">{{this.ten_tac_gia}}</span>
                                     <p>
                                         Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                                         Nobis voluptatibus enim, perferendis in fuga excepturi,
@@ -113,7 +117,10 @@
         <div class="book-lists d-flex">
             {{#each books}}
             <div class="book-item" data-book="">
-                <div class="img-box"><img src="/img/covers/{{this.bia_sach}}" alt="" class="book-img"></div>
+                <div class="img-box">
+                    <img src="/img/covers/{{this.bia_sach}}" alt="" class="book-img">
+                </div>
+                <span class="btn-listen fa-regular fa-circle-play" data-id="{{this.id}}"></span>
                 <span class="author desc">{{this.ten_tac_gia}}</span>
                 <span class="name main-title">{{this.ten_sach}}</span>
                 <span class="icon-star fa-regular fa-star-half-stroke">
@@ -126,6 +133,57 @@
     </div>
 </section>
 
+<div class="audio-player">
+    <!-- Tracks used in this music/audio player application are free to use. I downloaded them from Soundcloud and NCS websites. I am not the owner of these tracks. -->
+    <div id="app-cover">
+        <div id="player">
+            <div id="player-track">
+                <div id="album-name"></div>
+                <div id="track-name"></div>
+                <div id="track-time">
+                    <div id="current-time"></div>
+                    <div id="track-length"></div>
+                </div>
+                <div id="s-area">
+                    <div id="ins-time"></div>
+                    <div id="s-hover"></div>
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+
+                    <img src="/img/covers/ChiPheo-NamCao.png" class="active" id="_1">
+
+
+
+                    <div id="buffer-box">Buffering ...</div>
+                </div>
+                <!-- <div class="player-option">
+
+                </div> -->
+                <div id="player-controls">
+                    <div class="control">
+                        <div class="button" id="play-previous">
+                            <i class="fas fa-backward"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-pause-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-next">
+                            <i class="fas fa-forward"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!-- jquery -->
@@ -133,3 +191,4 @@
 
 {{!-- script --}}
 <script src="/js/bookmark.js"></script>
+<script src="/js/audio_player.js"></script>

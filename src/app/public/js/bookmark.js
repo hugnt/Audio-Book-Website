@@ -63,16 +63,14 @@ $(document).ready(function () {
     $('.btn-read').click(function () {
         $(swiper1.slides[swiper1.activeIndex]).click();
     });
-    $('.book-item').click(function () {
+    $('.img-box').click(function () {
         var selectedBook = $(this).attr("data-book");
         localStorage.setItem("selectedBook", selectedBook);
         console.log(selectedBook);
 
         window.location.href = 'bookmark_reading'
     });
-
-
-
+    
 });
 
 
