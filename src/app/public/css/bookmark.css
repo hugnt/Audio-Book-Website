@@ -31,6 +31,7 @@
 }
 
 .slide-books .list-books .book-item {
+  position: relative;
   width: 100%;
 }
 
@@ -65,10 +66,12 @@
 .infor-books .menu-info li:hover {
   color: #E50914;
 }
-.slide-infor-books{
+
+.slide-infor-books {
   overflow: hidden;
 }
-.infor-books .infor-box .slide-box  {
+
+.infor-books .infor-box .slide-box {
   justify-content: space-between;
 }
 
@@ -146,9 +149,11 @@
   padding: 0.5rem 0.6rem !important;
   border-radius: 50%;
 }
-.about_author p{
+
+.about_author p {
   text-align: justify;
 }
+
 .about_author .read-more {
   margin: 1rem 0;
   color: #c8b197;
@@ -422,8 +427,12 @@
 }
 
 .btn-listen {
-  font-size: 32px;
+  /* font-size: 32px; */
+  position: relative;
+}
+.fa-circle-play {
+  font-size: 42px;
   position: absolute;
   right: 10px;
-  bottom: 100px;
+  bottom: 10px;
 }
