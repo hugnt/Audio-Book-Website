@@ -14,12 +14,14 @@ class AudioController {
         .catch(next); 
     }
     getByAPI(req, res, next){
-        let content = req.params.content;
-        let voice = req.params.voice;
-        let speed = req.params.speed;
+        let user_name = req.params.user_name;
+        let audio_id = req.params.audio_id;
+        const {content, voice, speed} = req.body;
         getAudioAPI(content, voice, speed)
-        .then(audioSrc =>{
-            res.json(audioSrc);
+        .then(audioAPIRes =>{
+            const audioUrl = audioAPIRes.async
+            const audioReceived = {user_name, audio_id, audioUrl};
+            res.json(audioReceived);
         })
         .catch(next);
     }

@@ -111,7 +111,13 @@
                 <div class="book-lists d-flex">
                     {{#each books}}
                     <div class="book-item" data-book="">
-                        <div class="img-box"><img src="/img/covers/{{this.bia_sach}}" alt="" class="book-img"></div>
+                        <div class="img-box">
+                            <img src="/img/covers/{{this.bia_sach}}" alt="" class="book-img">
+                            <div class="feature">
+                                <span  onclick="window.location.href='/bookmark_reading/{{this.id}}'" class="action-read fa-brands fa-readme"></span>
+                                <span class="action-listen fa-solid fa-headphones-simple"></span>      
+                            </div>
+                        </div>
                         <span class="author desc">{{this.ten_tac_gia}}</span>
                         <span class="name main-title">{{this.ten_sach}}</span>
                         <span class="icon-star fa-regular fa-star-half-stroke">
@@ -128,4 +134,4 @@
 </section>
 
 
-<script src="/js/home.js"></script>
+<script src="/js/home.js"></script> 

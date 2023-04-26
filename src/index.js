@@ -28,12 +28,18 @@ web.set('views', [
 web.use(express.static('./src/app/public'));
 web.use(express.static('./node_modules/3d-flip-book'));
 
+// Middleware để giải mã body request
+web.use(express.json());
+web.use(express.urlencoded({ extended: true }));
+
+
 //connect db
 console.log('Connect database successfully on port',db.config.connectionConfig.port);
 
 
 //route
 route(web);
+
 
 web.listen(8888,"0.0.0.0", () => {
     console.log('listen on port 8888...')

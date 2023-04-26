@@ -11,15 +11,14 @@
             </div>
             <span class="big-main-title">You are reading</span>
             <div class="img-box">
-                <img src="/img/ADVENTURES_OF_HUCKLEBERRY_FINN-2.jpg" alt="" class="w-100">
+                <img src="/img/covers/{{book.bia_sach}}" alt="" class="w-100">
             </div>
             <div class="desc">
-                <span class="book-name">The Root Way</span>
-                <span class="author d-block">Mark Twain</span>
+                <span class="book-name">{{book.ten_sach}}</span>
+                <span class="author d-block">{{book.ten_tac_gia}}</span>
                 <span class="n_pages d-block">Pages: 150</span>
 
-            </div>
-
+            </div>   
             <div class="note">
                 <span><i class="fa-solid fa-bookmark"></i>Book Mark</span>
                 <div class="mark">
@@ -38,7 +37,7 @@
                 <button><i class="fa-solid fa-cart-plus"></i>Buy this book</button>
             </div>
         </div>
-        <div class="flip-book-container w-100" src="">
+        <div class="flip-book-container w-100" src="/pdf/{{book.pdf}}">
 
         </div>
     </div>
@@ -56,4 +55,5 @@
     };
 </script>
 <script src="/src/3dflipbook.min.js"></script>
-<script src="js/bookmark_reading.js" type="module"></script>
+
+{{!-- <script src="/js/bookmark_reading.js" type="module"></script> --}}
