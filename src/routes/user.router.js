@@ -8,6 +8,7 @@ const fileUpload = require('express-fileupload');
 router.use(fileUpload());
 const fs = require('fs');
 const storeController = require('../app/controllers/StoreController');
+router.get('/bookstore/:id', storeController.getById);
 
 router.get('/home', appController.home);
 router.get('/home01', appController.home01);
@@ -57,7 +58,7 @@ router.post('/uploadFile/:user_name', function (req, res) {
         if (err) {
             return res.status(500).send(err);
         }
-router.get('/bookstore/:id', storeController.getById);
+        router.get('/bookstore/:id', storeController.getById);
 
         res.send('Tải tệp tin lên thành công');
     });
