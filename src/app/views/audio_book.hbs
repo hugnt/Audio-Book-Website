@@ -412,12 +412,19 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
-<script src="/js/audio_book.js"></script>
+
+{{!-- <script type="module">
+      import Crunker from 'https://unpkg.com/crunker@latest/dist/crunker.esm.js';
+</script> --}}
+{{!-- <script type="module" src="https://unpkg.com/crunker@latest/dist/crunker.esm.js"></script> --}}
+<script type="module" src="/js/audio_book.js"></script>
 <script src="/js/audio_player.js"></script>
 
 
-<!-- handle input  -->
 
-{{!-- <script src="/js/input_handler.js"></script> --}}
+
 <!-- tranfer pdf to text lib -->
 <script src="https://unpkg.com/pdfjs-dist/build/pdf.min.js"></script>
+
+{{!-- concat audio  --}}
+

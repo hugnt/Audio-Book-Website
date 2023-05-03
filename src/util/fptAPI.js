@@ -1,15 +1,16 @@
-
+//env
+require('dotenv').config();
 const axios = require('axios');
 
 
 const baseUrl = "https://api.fpt.ai/hmi/tts/v5";
-const  apiKey = "RKWYCowwW2I8v78HRiqdsabyKcfGoRC9";
+
 
 
 async function getAudioAPI(data, voice, speed) {
     try {
         const headers = {
-            "api_key": apiKey,
+            "api_key": process.env.API_KEY,
             "voice": voice,
             "speed": speed
         };
