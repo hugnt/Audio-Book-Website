@@ -10,6 +10,7 @@ const fs = require('fs');
 const storeController = require('../app/controllers/StoreController');
 router.get('/bookstore/:id', storeController.getById);
 
+router.get('/', appController.signup);
 router.get('/home', appController.home);
 router.get('/home01', appController.home01);
 router.get('/home02', appController.home02);

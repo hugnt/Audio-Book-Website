@@ -23,11 +23,11 @@ class AppController {
     };
 
     loading(req, res) {
-        res.render('loading');
+        res.render('loading', { layout: false });
     };
 
     signup(req, res) {
-        res.render('signup');
+        res.render('signup', { layout: false });
     };
 
     bookmark_reading(req, res) {

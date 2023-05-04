@@ -1,6 +1,6 @@
 {{!-- css --}}
 <link rel="stylesheet" href="css/home.css">
-
+<link rel="stylesheet" href="/css/audio_player.css">
 {{!-- main - page --}}
 <section class="section-01">
     <div class="container d-flex w-90">
@@ -115,7 +115,7 @@
                             <img src="/img/covers/{{this.bia_sach}}" alt="" class="book-img">
                             <div class="feature">
                                 <span  onclick="window.location.href='/bookmark_reading/{{this.id}}'" class="action-read fa-brands fa-readme"></span>
-                                <span class="action-listen fa-solid fa-headphones-simple"></span>      
+                                <span class="action-listen fa-solid fa-headphones-simple btn-listen" data-id="{{this.id}}"></span>      
                             </div>
                         </div>
                         <span class="author desc">{{this.ten_tac_gia}}</span>
@@ -133,5 +133,56 @@
     </div>
 </section>
 
+<div class="audio-player">
+    <!-- Tracks used in this music/audio player application are free to use. I downloaded them from Soundcloud and NCS websites. I am not the owner of these tracks. -->
+    <div id="app-cover">
+        <div id="player">
+            <div id="player-track">
+                <div id="album-name"></div>
+                <div id="track-name"></div>
+                <div id="track-time">
+                    <div id="current-time"></div>
+                    <div id="track-length"></div>
+                </div>
+                <div id="s-area">
+                    <div id="ins-time"></div>
+                    <div id="s-hover"></div>
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+
+                    <img src="/img/covers/ChiPheo-NamCao.png" class="active" id="_1">
+
+
+
+                    <div id="buffer-box">Buffering ...</div>
+                </div>
+                <!-- <div class="player-option">
+
+                </div> -->
+                <div id="player-controls">
+                    <div class="control">
+                        <div class="button" id="play-previous">
+                            <i class="fas fa-backward"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-pause-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-next">
+                            <i class="fas fa-forward"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/js/home.js"></script> 
+<script src="/js/audio_player.js"></script>

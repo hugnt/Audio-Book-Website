@@ -5,8 +5,9 @@ body,
   color: #fff;
   font-size: 14px;
   letter-spacing: 1px;
-  background: url(/img/736461.png) no-repeat center center #505050;
-  background-size: cover; }
+  background: url(/img/4NB4.gif) repeat #505050;
+  /* background-size: cover;  */
+}
 
 .login {
   cursor: pointer;
@@ -17,15 +18,20 @@ body,
   width: 405px;
   margin: auto;
   padding: 60px 60px;
-  background: url(/img/736461.png) no-repeat center center #505050;
-  background-size: cover;
-  box-shadow: 0px 30px 60px -5px #000; }
+  background: #ffe259;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ffa751, #ffe259);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffa751, #ffe259); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  box-shadow: 0px 0px 400px -42px rgba(255,255,255,1);
+-webkit-box-shadow: 0px 0px 400px -42px rgba(255,255,255,1);
+-moz-box-shadow: 0px 0px 400px -42px rgba(255,255,255,1);
+}
 
 .form {
   padding-top: 80px; }
 
 .active {
-  border-bottom: 2px solid #1161ed; }
+  border-bottom: 5px solid #ffffff; }
 
 .nonactive {
   color: rgba(255, 255, 255, 0.2); }
@@ -37,7 +43,7 @@ h2 {
   padding-bottom: 5px;
   letter-spacing: 2px;
   display: inline-block;
-  font-weight: 100; }
+  font-weight: bolder; }
 
 h2:first-child {
   padding-left: 0px; }
@@ -45,10 +51,11 @@ h2:first-child {
 span {
   text-transform: uppercase;
   font-size: 12px;
-  opacity: 0.4;
+  /* opacity: 0.4; */
   display: inline-block;
   position: relative;
   top: -65px;
+  font-weight: bolder;
   transition: all 0.5s ease-in-out; }
 
 .text {
@@ -71,7 +78,7 @@ span {
   background: rgba(0, 0, 0, 0); }
 
 .text:focus + span {
-  opacity: 0.6; }
+  opacity: 1; }
 
 input[type="text"],
 input[type="password"] {
@@ -120,7 +127,7 @@ label {
   padding-left: 5px; }
 
 .signin, .signup {
-  background-color: #1161ed;
+  background-color: #000000;
   color: #FFF;
   width: 100%;
   padding: 10px 20px;
@@ -132,7 +139,7 @@ label {
   border: none;
   text-transform: uppercase; }
 
-.signin, .signup:hover {
+.signin:hover, .signup:hover {
   background: #4082f5;
   box-shadow: 0px 4px 35px -5px #4082f5;
   cursor: pointer; }
