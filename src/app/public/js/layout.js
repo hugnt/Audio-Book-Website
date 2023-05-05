@@ -107,16 +107,15 @@ $j(document).ready(function () {
         }
     });
 
-
-    //click to read bookk
-    // $j('.book-item').click(function () {
-    //     var selectedBook = $j(this).attr("data-book");
-    //     localStorage.setItem("selectedBook", selectedBook);
-    //     // console.log(selectedBook);
-    //     window.open('./bookmark_reading', '_blank');
-    //     // window.location.href = './bookmark_reading'
-    // });
-
+    $j(".user-infor").click(function(){
+        $(".user-infor .user-method").toggle();
+    });
+    $j(".user-avatar").click(function(){
+        $(".user-infor .user-method").toggle();
+    });
+    $j(".log-out").click(function(){
+        window.location.href="/signup";
+    });
 
 
 });

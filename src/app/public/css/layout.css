@@ -250,9 +250,71 @@ nav .account-zone .user-avatar img {
 }
 
 nav .account-zone .user-infor {
+  position: relative;
   color: #808080;
   font-size: 1.2rem;
+  
 }
+nav .account-zone .user-infor:hover {
+  color: #c8b197;
+  font-size: 1.5rem;
+}
+
+nav .account-zone .user-method{
+  position: absolute;
+  top: 280%;
+  right: 0;
+  border: 1px solid #c8b197;
+  padding: 1rem;
+  z-index: 2;
+  border-radius: 0.5rem;
+  background-color: #000;
+  display: none;
+}
+
+nav .account-zone .user-method .user-report, .log-out{
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  cursor: pointer;
+}
+nav .account-zone .user-method .user-report:hover i, .log-out:hover i{
+  color: #c8b197;
+  transform: scale(1.2);
+}
+nav .account-zone .user-method .user-info{
+  display: flex;
+  align-items: center;
+}
+nav .account-zone .user-method span{
+  font-size: 1.1rem;
+  width: 100%;
+  cursor: pointer;
+
+}
+nav .account-zone .user-method span:hover{
+  color: #c8b197;
+}
+nav .account-zone .user-method i{
+  margin-right: 1rem;
+  font-size: 1.5rem;
+}
+nav .account-zone .user-method .user-info{
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 1rem;
+}
+nav .account-zone .user-profile{
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0px 0px 25px -5px rgba(224,224,224,0.81);
+-webkit-box-shadow: 0px 0px 25px -5px rgba(224,224,224,0.81);
+-moz-box-shadow: 0px 0px 25px -5px rgba(224,224,224,0.81);
+}
+
+
 
 /* small-menu */
 .btn-menu {

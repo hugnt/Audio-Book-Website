@@ -1,4 +1,5 @@
 // const { text } = require("body-parser");
+import Crunker from 'https://unpkg.com/crunker@latest/dist/crunker.esm.js';
 
 $(document).ready(function () {
     var audioOutput = $(".section-studio .output .audio-res audio");
@@ -9,11 +10,17 @@ $(document).ready(function () {
     const submitBtn = $(".btn-confirm-text");
     const userListBook = $('.section-trend .user-book .list-books #tmp');
     var recordType = "Bản nghe thử";
+    var audioUrls = [];
 
     // setPending(false);
     // setOutput(true);
     // setInput(false);
     // setLoading(false);
+    // let lstAudios = [
+    //     'https://file01.fpt.ai/text2speech-v5/short/2023-05-02/6ca2995b08d9ec6456deb0ae4351cad8.mp3',
+    //     'https://file01.fpt.ai/text2speech-v5/short/2023-05-02/ed5f0ad7787fd444ea7443edba94bd31.mp3',
+    //     'https://file01.fpt.ai/text2speech-v5/short/2023-05-02/4e2df9ed181e9b3214803d8f96338791.mp3'
+    // ];
 
     var audioInfo = {
         id: "uaid_0",
@@ -24,7 +31,7 @@ $(document).ready(function () {
         speed: "",
         voice: "",
         inputType: "",
-        user_name:"hungnt"
+        user_name: "hungnt"
     };
 
     var validate = {
@@ -35,7 +42,7 @@ $(document).ready(function () {
 
     //input tag
     $('#inputGroupFile04').on('change', function () {
-    
+
         $(this).next('.custom-file-label').html(fileInput.prop("files")[0].name);
     })
 
@@ -120,8 +127,8 @@ $(document).ready(function () {
         e.preventDefault();
         try {
             //validation
-            if(!isConfirmInput()) return;
-            if(!isValidInput()) return;
+            if (!isConfirmInput()) return;
+            if (!isValidInput()) return;
 
             //display loading
             setPending(false);
@@ -134,7 +141,10 @@ $(document).ready(function () {
             var voice = voiceInput.val();
             var speed = speedInput.val();
             var content = await getContent();
-           
+
+            audioInfo.voice = voice;
+            audioInfo.speed = speed;
+
             //add infor to details popup
             var typeInput = "Nhập văn bản";
             if (!textInput.val()) typeInput = "File văn bản";
@@ -142,9 +152,30 @@ $(document).ready(function () {
             $('#detailsInforModal #voice').val(voice);
             $('#detailsInforModal #speed').val(speed);
 
-            //get audio url by calling API
-            ajaxPOST(content, voice, speed);
 
+            //spliting content
+            var words = content.split(' ');
+            var totalWords = words.length;
+            var wordPerCalling = 1000;
+            var index = 0;
+            var n = Math.ceil(totalWords / wordPerCalling);
+            console.log("Number of calling API: " + n);
+            audioUrls = new Array(n);;
+
+            let promises = [];
+            for (let i = 0; i < words.length; i += wordPerCalling) {
+                const selectedWords = words.slice(i, i + wordPerCalling);
+                console.log(selectedWords.join(" "));
+                var selectedContent = selectedWords.join(" ");
+
+                //get audio url by calling API
+                promises.push(ajaxPOST(index, selectedContent, voice, speed));
+                // ajaxPOST(index, selectedContent, voice, speed);
+                index++;
+
+            }
+            await Promise.all(promises);
+            console.log("All AJAX requests have been completed.");
         } catch (err) {
             console.error(err);
         }
@@ -179,8 +210,8 @@ $(document).ready(function () {
         e.preventDefault();
         try {
             //validation
-            if(!isConfirmInput()) return;
-            if(!isValidInput()) return;
+            if (!isConfirmInput()) return;
+            if (!isValidInput()) return;
 
             //display loading
             setPending(false);
@@ -202,8 +233,30 @@ $(document).ready(function () {
             $('#detailsInforModal #voice').val(voice);
             $('#detailsInforModal #speed').val(speed);
 
-            //get audio url by calling API
-            ajaxPOST(content, voice, speed);
+
+            //spliting content
+            var words = content.split(' ');
+            var totalWords = words.length;
+            var wordPerCalling = 1000;
+            var index = 0;
+            var n = Math.ceil(totalWords / wordPerCalling);
+            console.log("Number of calling API: " + n);
+            audioUrls = new Array(n);;
+
+            let promises = [];
+            for (let i = 0; i < words.length; i += wordPerCalling) {
+                const selectedWords = words.slice(i, i + wordPerCalling);
+                console.log(selectedWords.join(" "));
+                var selectedContent = selectedWords.join(" ");
+
+                //get audio url by calling API
+                promises.push(ajaxPOST(index, selectedContent, voice, speed));
+                // ajaxPOST(index, selectedContent, voice, speed);
+                index++;
+
+            }
+            await Promise.all(promises);
+            console.log("All AJAX requests have been completed.");
 
         } catch (err) {
             console.error(err);
@@ -211,7 +264,7 @@ $(document).ready(function () {
     });
 
     //ajax POST to get audio url
-    function ajaxPOST(content, voice, speed) {
+    function ajaxPOST(index, content, voice, speed) {
         $.ajax({
             url: `/audio_book/api/${audioInfo.name}/${audioInfo.id}`,
             type: 'POST',
@@ -220,16 +273,12 @@ $(document).ready(function () {
             success: function (response) {
                 checkValidUrl(response.audioUrl, 0, function (isValid) {
                     if (isValid) {
-                        setPending(false);
-                        setLoading(false);
-                        setInput(true);
-                        setOutput(true);
-                        audioOutput.attr('src', response.audioUrl);
-                        audioInfo.url = response.audioUrl;
-                        audioInfo.voice = voice;
-                        audioInfo.speed = speed;
-                        audioInfo.author = "hungnt";
-                        audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
+                        // audioOutput.attr('src', response.audioUrl);
+                        audioUrls[index] = response.audioUrl;
+                        if (!audioUrls.includes(undefined)) {
+                            console.log("OKOK");
+                            concatAudios(audioUrls);
+                        }
                     }
                     else {
                         console.log("Gãy...");
@@ -293,6 +342,7 @@ $(document).ready(function () {
         return true;
 
     }
+
     //tranfer PDF -> TEXT
     async function convertPDFtoText(url) {
         try {
@@ -310,10 +360,11 @@ $(document).ready(function () {
             throw err;
         }
     }
-    async function getContent(){
+    async function getContent() {
         try {
             var contentType = $("input[name='upload']:checked");
-            if (contentType.val() == 1) {;
+            if (contentType.val() == 1) {
+                ;
                 var formData = new FormData();
                 var fileName = fileInput.prop("files")[0].name;
                 formData.append("uploadFile", fileInput.prop("files")[0]);
@@ -324,11 +375,11 @@ $(document).ready(function () {
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function(response) {
-                      console.log(response);
+                    success: function (response) {
+                        console.log(response);
                     },
-                    error: function(error) {
-                      console.log(error);
+                    error: function (error) {
+                        console.log(error);
                     }
                 });
                 const url = `../clientFiles/${audioInfo.user_name}/${fileName}`;
@@ -339,10 +390,44 @@ $(document).ready(function () {
                 return textInput.val();
             }
         } catch (error) {
-            console.log("getContent-ERROR: "+error);    
+            console.log("getContent-ERROR: " + error);
             return "Xin chào";
         }
 
+    }
+
+    //concat audios into one
+    async function concatAudios(lstAudios) {
+        let crunker = new Crunker();
+        try {
+            const buffers = await crunker.fetchAudio(...lstAudios);
+            // => [AudioBuffer, AudioBuffer]
+            const concat = await crunker.concatAudio(buffers);
+            console.log(concat);
+            const output = await crunker.export(concat, 'audio/mp3');
+            // => {blob, element, url}
+            // crunker.download(output.blob,"testconcat1");
+            audioOutput.attr('src', output.url);
+            audioInfo.url = output.url;
+            audioInfo.author = "hungnt";
+            audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
+            // console.log(output.blob);
+            console.log(output.url);
+
+            setPending(false);
+            setLoading(false);
+            setInput(true);
+            setOutput(true);
+        } catch (error) {
+            // => Error Message
+
+            console.log("Audio concat Error!!: " + error);
+        }
+
+        crunker.notSupported(() => {
+            // Handle no browser support
+            console.log("NGUUUU");
+        });
     }
 
     //ADD TO LIST
@@ -386,6 +471,7 @@ $(document).ready(function () {
         e.preventDefault();
         audioInfo.inputType = $('#detailsInforModal #inputType').val();
         audioInfo.name = $('#detailsInforModal #bookName').val();
+        if (audioInfo.name == "" || audioInfo.name == undefined) audioInfo.name = "myAudioBook";
         audioInfo.author = $('#detailsInforModal #author').val();
         $('.section-studio .output .details .book-name').text("- Tên sách: " + audioInfo.name);
         $('.section-studio .output .details .author').text("- Tác giả: " + audioInfo.author);
