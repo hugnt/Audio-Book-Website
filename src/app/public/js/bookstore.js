@@ -59,21 +59,28 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                var cartItems = "";
-                console.log(data)
-                cartItems += "<div class='cart-box cart-" + data[0].id + "'>";
-                cartItems += "<img class='cart-img' src='/img/covers/" + data[0].bia_sach + "' alt=''>";
-                cartItems += "<div class='detail-box'>";
-                cartItems += "<div class='cart-product-title'>" + data[0].ten_sach + "</div>";
-                cartItems += "<div class='cart-price'>" + data[0].gia_sach.toFixed(3) + "đ</div>";
-                cartItems += "<input type='number' value='1' class='cart-quantity' min='1'>";
-                cartItems += "</div>";
-                cartItems += "<a class='cart-remove'><i class='bi bi-trash-fill ' ></i></a>"
-                cartItems += "</div>";
-
-                cartContent.append(cartItems);
-                total += data[0].gia_sach;
-                $('.total-price').text(total.toFixed(3) + "đ");
+                var cartItem = $(".cart-" + data[0].id);
+                if (cartItem.length) {
+                    // Increase the quantity of the existing item in the cart
+                    var quantity = parseInt(cartItem.find(".cart-quantity").val()) + 1;
+                    cartItem.find(".cart-quantity").val(quantity);
+                } else {
+                    // Add the new item to the cart
+                    var cartItemHTML = "<div class='cart-box cart-" + data[0].id + "'>";
+                    cartItemHTML += "<img class='cart-img' src='/img/covers/" + data[0].bia_sach + "' alt=''>";
+                    cartItemHTML += "<div class='detail-box'>";
+                    cartItemHTML += "<div class='cart-product-title'>" + data[0].ten_sach + "</div>";
+                    cartItemHTML += "<div class='cart-price'>" + data[0].gia_sach + "đ</div>";
+                    cartItemHTML += "<input type='number' value='1' class='cart-quantity' min='1'>";
+                    cartItemHTML += "</div>";
+                    cartItemHTML += "<a class='cart-remove'><i class='bi bi-trash-fill ' ></i></a>"
+                    cartItemHTML += "</div>";
+                    cartContent.append(cartItemHTML);
+                }
+                // Update the total price
+                var price = parseFloat(data[0].gia_sach);
+                total += price;
+                $('.total-price').text(total + "đ");
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -91,9 +98,11 @@ $(function () {
 
     //remove book
     $('.cart-content').on('click', '.cart-remove', function () {
-        const price = parseFloat($(this).closest('.cart-box').find('.cart-price').text());
-        total = total - price;
-        $('.total-price').text(total.toFixed(3) + "đ");
+        var quantity = parseInt($(this).closest('.cart-box').find('.cart-quantity').val());
+        var price = parseFloat($(this).closest('.cart-box').find('.cart-price').text());
+        var subtotal = quantity * price;
+        total -= subtotal;
+        $('.total-price').text(total + "đ");
         $(this).closest('.cart-box').remove();
     });
 
@@ -105,11 +114,12 @@ $(function () {
             var price = parseFloat($(this).closest('.cart-box').find('.cart-price').text());
             subtotal += quantity * price;
         });
-        $('.total-price').text(subtotal.toFixed(3) + "đ");
+        $('.total-price').text(subtotal + "đ");
     }
     $('.cart-content').on('input', '.cart-quantity', function () {
         updateTotal();
     });
+
     // find book by author name
     function findBookByAuthor(authorName) {
         $('.listProduct li.product-card').each(function () {
