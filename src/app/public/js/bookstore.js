@@ -12,9 +12,9 @@ openCart.onclick = function () {
 $(function () {
     var authorName = $(".title2"),
         bookName = $(".title1"),
-        rateStar = $(".desc"),
-        rateQuantity = $(".rate-desc"),
-        bookCategory = $(".tag"),
+        // rateStar = $(".desc"),
+        // rateQuantity = $(".rate-desc"),
+        // bookCategory = $(".tag"),
         summary = $(".column2 p"),
         cartContent = $(".cart-content"),
         total = 0
@@ -28,14 +28,14 @@ $(function () {
             success: function (item) {
                 // Data is returned with array of objects -> to access item[0].<row_name>
                 console.log(item);
-                Tentg = item[0];
-                authorName.text(item[0].ten_tac_gia);
-                bookName.text(item[0].ten_sach);
-                rateStar.text(item[0].ty_le_sao);
-                rateQuantity.text(item[0].sl_danh_gia + "k đánh giá");
-                bookCategory.text(item[0].the_loai);
-                summary.text(item[0].mo_ta);
-                var imgHTML = `<img src="/img/covers/${item[0].bia_sach}" id="_${item[0].id}" alt="cover" class="cover">`;
+                // Tentg = item[0];
+                authorName.text(item[0].author_name);
+                bookName.text(item[0].name);
+                // rateStar.text(item[0].ty_le_sao);
+                // rateQuantity.text(item[0].sl_danh_gia + "k đánh giá");
+                // bookCategory.text(item[0].the_loai);
+                summary.text(item[0].description);
+                var imgHTML = `<img src="/img/covers/${item[0].cover_image}" id="_${item[0].id}" alt="cover" class="cover">`;
                 $(".img-before").before(imgHTML)
             },
             error: function (xhr, status, error) {
@@ -67,10 +67,10 @@ $(function () {
                 } else {
                     // Add the new item to the cart
                     var cartItemHTML = "<div class='cart-box cart-" + data[0].id + "'>";
-                    cartItemHTML += "<img class='cart-img' src='/img/covers/" + data[0].bia_sach + "' alt=''>";
+                    cartItemHTML += "<img class='cart-img' src='/img/covers/" + data[0].cover_image + "' alt=''>";
                     cartItemHTML += "<div class='detail-box'>";
-                    cartItemHTML += "<div class='cart-product-title'>" + data[0].ten_sach + "</div>";
-                    cartItemHTML += "<div class='cart-price'>" + data[0].gia_sach + "đ</div>";
+                    cartItemHTML += "<div class='cart-product-title'>" + data[0].name + "</div>";
+                    cartItemHTML += "<div class='cart-price'>" + data[0].price + "đ</div>";
                     cartItemHTML += "<input type='number' value='1' class='cart-quantity' min='1'>";
                     cartItemHTML += "</div>";
                     cartItemHTML += "<a class='cart-remove'><i class='bi bi-trash-fill ' ></i></a>"
@@ -78,7 +78,7 @@ $(function () {
                     cartContent.append(cartItemHTML);
                 }
                 // Update the total price
-                var price = parseFloat(data[0].gia_sach);
+                var price = parseFloat(data[0].price);
                 total += price;
                 $('.total-price').text(total + "đ");
             },

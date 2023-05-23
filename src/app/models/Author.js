@@ -1,5 +1,5 @@
 
-const querySelectAll = 'SELECT * FROM tac_gia';
+const querySelectAll = 'SELECT * FROM author';
 const {excuteQuery} = require('../../util/mySql')
 
 const Author = {

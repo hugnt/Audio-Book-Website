@@ -15,7 +15,7 @@
                 <select>
                     <option>All</option>
                     {{#each authors}}
-                    <option data-id="{{this.ten_tac_gia}}">{{this.ten_tac_gia}}</option>
+                    <option data-id="{{this.name}}">{{this.name}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -49,17 +49,17 @@
                 <div class="product">
                     <ul class="listProduct">
                         {{#each books}}
-                        <li class="product-card" data-author="{{this.ten_tac_gia}}">
+                        <li class="product-card" data-author="{{this.author_name}}">
                             <div class="badge">Hot</div>
                             <div class="product-tumb">
-                                <img src="/img/covers/{{this.bia_sach}}" alt="">
+                                <img src="/img/covers/{{this.cover_image}}" alt="">
                             </div>
                             <div class="product-details">
-                                <span class="product-catagory">{{this.ten_tac_gia}}</span>
-                                <h4 class="book-title"><a href="#">{{this.ten_sach}}</a></h4>
-                                <p>{{this.mo_ta}}</p>
+                                <span class="product-catagory">{{this.author_name}}</span>
+                                <h4 class="book-title"><a href="#">{{this.name}}</a></h4>
+                                <p>{{this.description}}</p>
                                 <div class="product-bottom-details">
-                                    <div class="product-price"><small>90.000 đ</small>{{this.gia_sach}} đ</div>
+                                    <div class="product-price"><small>90.000 đ</small>{{this.price}} đ</div>
                                     <div class="product-links">
                                         <a class="book-card" href="#movie-card" data-id="{{this.id}}">
                                             <i class="bi bi-balloon-heart"></i>

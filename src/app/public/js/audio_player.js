@@ -100,10 +100,10 @@ $(function () {
             dataType: 'json',
             success: function (item) {
                 var book = {
-                    ten_sach: item[0].ten_sach,
-                    ten_tac_gia: item[0].ten_tac_gia,
+                    ten_sach: item[0].name,
+                    ten_tac_gia: item[0].author_name,
                     id: "_" + item[0].id,
-                    bia_sach: item[0].bia_sach,
+                    bia_sach: item[0].cover_image,
                     audio: "../audio/" + item[0].audio
                 }
                 handleAddtoPlayer(book);
