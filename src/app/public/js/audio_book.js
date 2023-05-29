@@ -40,7 +40,7 @@ $(document).ready(function () {
         isSetSpeed: true,
     }
 
-    //input tag
+    //input file 
     $('#inputGroupFile04').on('change', function () {
 
         $(this).next('.custom-file-label').html(fileInput.prop("files")[0].name);
@@ -89,6 +89,10 @@ $(document).ready(function () {
 
     //input file or text option
     $('input[name=upload]').click(function () {
+        validate.isInput= false;
+        $('.list-op-upload .icon-check').css("display", "none");
+        $('.section-editer .icon-check').css("display", "none");
+        $('#inputGroupFile04').next('.custom-file-label').html("Chưa có file upload");
         $('input[name=upload]').each(function () {
             if ($(this).is(':checked')) {
                 // console.log($(this).attr('id'));
@@ -156,6 +160,7 @@ $(document).ready(function () {
             //spliting content
             var words = content.split(' ');
             var totalWords = words.length;
+            console.log("Number of words:", totalWords);
             var wordPerCalling = 1000;
             var index = 0;
             var n = Math.ceil(totalWords / wordPerCalling);
@@ -300,9 +305,9 @@ $(document).ready(function () {
             console.log(`${key}: ${value}`);
             if (value == false) {
                 alert("Nhập thiếu trường hoặc chưa ấn xác nhận tại mỗi lựa chọn", key);
-                setLoading(false);
-                setPending(true);
-                setInput(true);
+                // setLoading(false);
+                // setPending(true);
+                // setInput(true);
                 return false;
             }
         }

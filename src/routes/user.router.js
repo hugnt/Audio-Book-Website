@@ -40,6 +40,7 @@ router.get('/bookmark_reading/js/default-book-view.js', function (req, res) {
     res.redirect('/js/default-book-view.js');
 });
 
+
 //upload
 router.post('/uploadFile/:user_name', function (req, res) {
     let user_name = req.params.user_name;
