@@ -391,7 +391,7 @@ $(document).ready(function () {
             }
         } catch (error) {
             console.log("getContent-ERROR: " + error);
-            return "Xin chào";
+            return "Lỗi file pdf";
         }
 
     }
