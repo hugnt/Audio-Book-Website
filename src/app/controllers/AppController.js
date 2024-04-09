@@ -74,6 +74,15 @@ class AppController {
         .catch(next); 
     };
 
+    studio(req, res, next) {
+        Book.getBooks({})
+        .then((books)=>{
+            res.render('studio',{
+                books
+            });
+        })
+        .catch(next); 
+    };
 
 }
 

@@ -103,8 +103,8 @@ $(function () {
                     ten_sach: item[0].name,
                     ten_tac_gia: item[0].author_name,
                     id: "_" + item[0].id,
-                    bia_sach: item[0].cover_image,
-                    audio: "../audio/" + item[0].audio
+                    bia_sach: item[0].image,
+                    audio: "../audio/" + item[0].audio_fileName
                 }
                 handleAddtoPlayer(book);
 

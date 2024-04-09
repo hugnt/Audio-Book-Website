@@ -1,5 +1,5 @@
 
-const {Book} = require('../models/Book');
+const {Audio} = require('../models/Audio');
 const {Author} = require('../models/Author');
 const {getAudioAPI} = require('../../util/fptAPI');
 
@@ -7,7 +7,7 @@ const {getAudioAPI} = require('../../util/fptAPI');
 class AudioController {
     getById(req, res, next){
         let id = req.params.id;
-        Book.getBooks({id:id})
+        Audio.getAudios({audioId:id})
         .then((books)=>{
            res.json(books);
         })

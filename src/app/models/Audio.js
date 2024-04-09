@@ -1,21 +1,23 @@
 
 const querySelectAll = `SELECT book.*, 
                                 author.name AS author_name, 
-                                bookcategory.name AS category_name
+                                bookcategory.name AS category_name,
+                                audio.fileName AS audio_fileName
                         FROM book
                         JOIN bookcategory ON book.categoryId = bookcategory.id
-                        JOIN author ON book.authorId = author.id`;
+                        JOIN author ON book.authorId = author.id
+                        JOIN audio ON book.audioId = audio.id`;
 const { excuteQuery } = require('../../util/mySql')
 
 
-const Book = {
-    getBooks: async function (obj) {
+const Audio = {
+    getAudios: async function (obj) {
         var query;
         if (Object.keys(obj).length === 0) {
             query = querySelectAll;
         }
         else {
-            query = `SELECT * FROM book WHERE `;
+            query = querySelectAll + ` WHERE `;
             for (const [key, value] of Object.entries(obj)) {
                 console.log(`${key}: ${value}`);
                 query += `${key} = ${value} AND `
@@ -34,4 +36,4 @@ const Book = {
 
 }
 
-module.exports = { Book };
+module.exports = { Audio };

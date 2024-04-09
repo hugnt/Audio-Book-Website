@@ -1,5 +1,8 @@
 
-const querySelectAll = 'SELECT * FROM author';
+const querySelectAll = `SELECT author.*, SUM(book.likes) AS total_likes
+                        FROM author
+                        JOIN book ON author.id = book.authorId
+                        GROUP BY author.id;`;
 const {excuteQuery} = require('../../util/mySql')
 
 const Author = {

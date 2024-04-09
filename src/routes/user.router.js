@@ -22,7 +22,7 @@ router.get('/bookstore', appController.bookstore);
 router.get('/challenge', appController.challenge);
 router.get('/community', appController.community);
 router.get('/audio_book', appController.audio_book);
-
+router.get('/studio', appController.audio_book);
 
 router.get('/audio_book/:id', audioController.getById);
 router.post('/audio_book/api/:user_name/:audio_id', audioController.getByAPI);
