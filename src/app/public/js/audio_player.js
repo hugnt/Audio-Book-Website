@@ -74,7 +74,6 @@ $(function () {
         albumArtworks.push(book.id);
         trackUrl.push(book.audio);
 
-        var listHTMLimg = `<img src="/img/covers/${book.bia_sach}" id="${book.id}" class="active" >`;
         // selectTrack(albumArtworks.length-1);
         currIndex = albumArtworks.length - 1;
         currAlbum = albums[currIndex];
@@ -85,7 +84,18 @@ $(function () {
         trackName.text(currTrackName);
         $("#" + currArtwork).addClass("active");
         playPauseButton.click();
-        $('#buffer-box').before(listHTMLimg);
+        $('#buffer-box').before(book.bia_sach);
+    }
+
+    function getAudiobookAPI(book) {
+        var book = {
+            ten_sach: book.name,
+            ten_tac_gia: book.author_name,
+            id: "_" + book.id,
+            bia_sach: `<img src="${book.images}" id="${book.id}" class="active" >`,
+            audio: book.audio
+        }
+        handleAddtoPlayer(book);
     }
 
     //getAUdio - form book (class)
@@ -103,7 +113,7 @@ $(function () {
                     ten_sach: item[0].name,
                     ten_tac_gia: item[0].author_name,
                     id: "_" + item[0].id,
-                    bia_sach: item[0].image,
+                    bia_sach: `<img src="/img/covers/${item[0].image}" id="${item[0].id}" class="active" >`,
                     audio: "../audio/" + item[0].audio_fileName
                 }
                 handleAddtoPlayer(book);
@@ -115,23 +125,38 @@ $(function () {
         });
     }
     $('.book-item .btn-listen').click(function () {
-        const bookId = $(this).data('id');
-        console.log("selectedBookDB: ", $(this).data('book'));
-        getAudioBookDB(bookId);
+        if ($(this).data('id')) {
+            const bookId = $(this).data('id');
+            console.log("selectedBookDB: ", $(this).data('book'));
+            getAudioBookDB(bookId);
+        } else {
+            const book = $(this).data('api')
+            getAudiobookAPI(book)
+        }
 
     });
 
     $('.section-banner .current-book-slides .book .action .btn-listen').click(function () {
-        const bookId = $(this).data('id');
-        console.log("selectedBookDB: ", $(this).data('book'));
-        getAudioBookDB(bookId);
+        if ($(this).data('id')) {
+            const bookId = $(this).data('id');
+            console.log("selectedBookDB: ", $(this).data('book'));
+            getAudioBookDB(bookId);
+        } else {
+            const book = $(this).data('api')
+            getAudiobookAPI(book)
+        }
 
     });
     //getAUdio - trend book (class)
     $('.section-trend .top-trend .action-listen').click(function () {
-        const bookId = $(this).data('id');
-        console.log("selectedBookDB: ", $(this).data('book'));
-        getAudioBookDB(bookId);
+        if ($(this).data('id')) {
+            const bookId = $(this).data('id');
+            console.log("selectedBookDB: ", $(this).data('book'));
+            getAudioBookDB(bookId);
+        } else {
+            const book = $(this).data('api')
+            getAudiobookAPI(book)
+        }
 
     });
 

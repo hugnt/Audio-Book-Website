@@ -22,7 +22,11 @@
                     <div class="d-flex swiper-slide book" data-id='{{this.id}}' data-audio='{{this.audio}}'
                         data-book='{{json this}}'>
                         <div class="books-show">
-                            <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
+                            {{#if this.images}}
+                                <img src="{{this.images}}" alt="" class="w-100 h-100">
+                            {{else}}
+                                <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
+                            {{/if}}
                             <span class="listener">
                                 <span class="fa-solid fa-headphones"></span>
                                 <span>{{this.likes}}K</span>
@@ -48,8 +52,12 @@
                             <div class="type txt">
                                 <span>Thể loại: {{this.category_name}}</span>
                             </div>
-                            <div class="action">
-                                <div class="btn-listen" data-id='{{this.id}}'>
+                            <div class="action" style="width: 200px;">
+                                {{#if this.images}}
+                                    <div class="btn-listen" data-api='{{json this}}'>
+                                {{else}}
+                                    <div class="btn-listen" data-id='{{this.id}}'>
+                                {{/if}}
                                     <span class="action-name">Nghe toàn bộ</span>
                                     <div class="icon-listen action-icon fa-regular fa-circle-play">
                                     </div>
@@ -67,7 +75,11 @@
                     {{#each books}}
                     <div class="swiper-slide book-item">
                         <div class="img-box w-30">
-                            <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
+                            {{#if this.images}}
+                                <img src="{{this.images}}" alt="" class="w-100 h-100">
+                            {{else}}
+                                <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
+                            {{/if}}
                         </div>
                         <div class="info-box w-70">
                             <div class="name">
