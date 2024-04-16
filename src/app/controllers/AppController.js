@@ -4,7 +4,7 @@ const {Author} = require('../models/Author');
 class AppController {
 
     home(req, res, next) {
-        Promise.all([Book.getBooks({}), Author.getAuthors({})])
+        Promise.all([Book.getBooks({accountId:1}), Author.getAuthors({})])
             .then((results)=>{
                 res.render('home',{
                     books:results[0],

@@ -1,7 +1,14 @@
 var cnt = 0;
 var $j = jQuery.noConflict();
 $j(document).ready(function () {
-
+    //var isValidUser = 
+    if(localStorage.username==null&&localStorage.accessToken==null){
+        window.location.href="/login"
+    }
+    $("#p-username").text(localStorage.username);
+    $("#p-profile").click(()=>{
+        window.location.href=`/profile/${localStorage.username}`
+    })
     //move page
     var pathName = window.location.pathname;
     const Array_path = pathName.split("/");
@@ -114,7 +121,7 @@ $j(document).ready(function () {
         $(".user-infor .user-method").toggle();
     });
     $j(".log-out").click(function(){
-        window.location.href="/signup";
+        window.location.href="/login";
     });
 
 

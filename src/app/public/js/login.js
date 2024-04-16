@@ -47,7 +47,7 @@ $('.signin').onclick = function(){
     let user=$$('.text')[0].value
     let pass=$$('.text')[1].value
       if((item.username==user && item.pass==pass) || (user==localStorage.user && pass==localStorage.password)){
-        $('a').click()
+        $('#openloading').click()
       }
       else{
         $('p').classList.add('active1');

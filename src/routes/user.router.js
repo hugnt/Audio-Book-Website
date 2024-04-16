@@ -1,16 +1,22 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const router = express.Router();
 const appController = require('../app/controllers/AppController');
 const audioController = require('../app/controllers/AudioController');
 const bookController = require('../app/controllers/BookController');
+const userController = require('../app/controllers/UserController');
 const fileUpload = require('express-fileupload');
 router.use(fileUpload());
+router.use(bodyParser.json());
+
 const fs = require('fs');
+
 const storeController = require('../app/controllers/StoreController');
 router.get('/bookstore/:id', storeController.getById);
 
-router.get('/', appController.signup);
+router.get('/login', appController.signup);
+router.get('/', appController.home);
 router.get('/home', appController.home);
 router.get('/home01', appController.home01);
 router.get('/home02', appController.home02);
@@ -60,10 +66,58 @@ router.post('/uploadFile/:user_name', function (req, res) {
         if (err) {
             return res.status(500).send(err);
         }
-        router.get('/bookstore/:id', storeController.getById);
+        //router.get('/bookstore/:id', storeController.getById);
 
         res.send('Tải tệp tin lên thành công');
     });
 });
+
+
+//USER
+router.get('/user/:id', userController.getById);
+router.post('/login', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const userLogin = {
+        username, 
+        password
+    }
+    try {
+        var isValidUser = await userController.login(userLogin);
+        if (isValidUser==null) {
+          res.status(404).send({ error: 'Account does not exist' });
+        } else {
+          res.status(200).send({
+            username,
+            accessToken: isValidUser
+          });
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'An error occurred' });
+      }
+  });
+
+router.post('/register', async (req, res) => {
+const username = req.body.username;
+const password = req.body.password;
+const userLogin = {
+    username, 
+    password
+}
+try {
+    var isValidUser = await userController.register(userLogin);
+    if (isValidUser==null) {
+        res.status(500).send({ error: 'Account is already exist' });
+    } else {
+        res.status(200).send({
+        username,
+        accessToken: isValidUser
+        });
+    }
+    } catch (error) {
+    res.status(500).send({ error: 'An error occurred' });
+    }
+});
+router.get('/profile/:username', userController.openProfile);
 
 module.exports = router

@@ -12,84 +12,28 @@
 <link rel="stylesheet" href="/css/audio_player.css">
 
 
-<section class="section-banner">
-    <div class="container">
-        <div class="current-book-show w-60">
-            <div class="title">Dành cho bạn</div>
-            <div class="current-book-slides swiper">
-                <div class="swiper-wrapper">
-                    {{#each books}}
-                    <div class="d-flex swiper-slide book" data-id='{{this.id}}' data-audio='{{this.audio}}'
-                        data-book='{{json this}}'>
-                        <div class="books-show">
-                            <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
-                            <span class="listener">
-                                <span class="fa-solid fa-headphones"></span>
-                                <span>{{this.likes}}K</span>
-                            </span>
-                        </div>
-                        <div class="book-info">
-                            <div class="book-name txt">
-                                <span>{{this.name}}</span>
-                            </div>
-                            <div class="book-rate">
-                                <span class="icon-star fa-regular fa-star-half-stroke"></span>
-                                <span class="icon-star fa-regular fa-star-half-stroke"></span>
-                                <span class="icon-star fa-regular fa-star-half-stroke"></span>
-                                <span class="icon-star fa-regular fa-star-half-stroke"></span>
-                                <span class="icon-star fa-regular fa-star-half-stroke"></span>
-                            </div>
-                            <div class="reader txt">
-                                <span>Người đọc: AI</span>
-                            </div>
-                            <div class="author txt">
-                                <span>Tác giả: {{this.author_name}}</span>
-                            </div>
-                            <div class="type txt">
-                                <span>Thể loại: {{this.category_name}}</span>
-                            </div>
-                            <div class="action">
-                                <div class="btn-listen" data-id='{{this.id}}'>
-                                    <span class="action-name">Nghe toàn bộ</span>
-                                    <div class="icon-listen action-icon fa-regular fa-circle-play">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
+<section class="section-banner" style="margin-bottom: 10rem;">
+    <div class="container " style="height: 20rem;">
+        <div class="position-relative w-100">
+            {{#each user}}
+            <div class="position-absolute d-flex align-items-center w-100" style="left: 0; bottom: -50%;right: 0;">
+                <div class="rounded-circle border border-2 border-white" style="height: 12rem;width: 12rem;overflow: hidden;">
+                    <img src="/img/ava.png" alt="AVATAR" class="w-100 h-100" style="object-fit: cover;" />
+                </div>
+                <div style="margin-left: 2rem; margin-top: 4rem;">
+                    <h2>{{this.username}}</h2>
+                    <span style="color: #bebebead;">Creator</span>
                 </div>
             </div>
-        </div>
-        <div class="others-book-show w-40">
-            <div class="swiper other-book-slides">
-                <div class="swiper-wrapper list-book-item">
-                    {{#each books}}
-                    <div class="swiper-slide book-item">
-                        <div class="img-box w-30">
-                            <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
-                        </div>
-                        <div class="info-box w-70">
-                            <div class="name">
-                                {{this.name}}
-                            </div>
-                            <div class="author">
-                                {{this.author_name}}
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-                <div class="swiper-scrollbar w-20 " style="width: .5rem;"></div>
-            </div>
+             {{/each}}
         </div>
     </div>
 </section>
 
 <section class="section-trend">
     <div class="container w-80">
-        <div class="top-trend w-60 ">
-            <div class="title">Xu hướng</div>
+        <div class="top-trend w-100 ">
+            <div class="title">Sách nói đã tạo</div>
             <div class="trend-slides swiper">
                 <div class="list-books swiper-wrapper">
                     {{#each books}}
@@ -108,24 +52,6 @@
                         <div class="book-name">{{this.name}}</div>
                     </div>
                     {{/each}}
-                </div>
-            </div>
-        </div>
-        <div class="user-book w-40">
-            <div class="title">Sách của bạn</div>
-            <div class="user-slides swiper">
-                <div class="list-books swiper-wrapper">
-                    <span id="tmp"></span>
-                    <div class="book-item swiper-slide">
-                        <div class="book-cover">
-                            <img src="/img/audio_book/null.png" alt="" class="w-100 h-100">
-                            <span class="action-more action-trash fa-solid fa-trash-can">
-                            </span>
-                            <span class="action-listen fa-regular fa-circle-play" data-audio="null" data-id="null">
-                            </span>
-                        </div>
-                        <div class="book-name">NULL AUDIO</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -332,7 +258,7 @@
                 </div>
                 <div class="form-group col-md-10">
                     <label for="author" style="color:#000">Tên tác giả</label>
-                    <input type="text" class="form-control" id="author" placeholder="user_name" disabled/>
+                    <input type="text" class="form-control" id="author" placeholder="user_name" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -414,7 +340,7 @@
       import Crunker from 'https://unpkg.com/crunker@latest/dist/crunker.esm.js';
 </script> --}}
 {{!-- <script type="module" src="https://unpkg.com/crunker@latest/dist/crunker.esm.js"></script> --}}
-<script type="module" src="/js/audio_book.js"></script>
+<script type="module" src="/js/audio_book_profile.js"></script>
 <script src="/js/audio_player.js"></script>
 
 

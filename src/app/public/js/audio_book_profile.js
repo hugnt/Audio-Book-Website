@@ -26,13 +26,12 @@ $(document).ready(function () {
         id: "uaid_0",
         name: "My audio book",
         url: "",
-        author: localStorage.username,
+        author: "Nam Nguyễn",
         cover: "null.png",
         speed: "",
         voice: "",
         inputType: "",
-        user_name: localStorage.username,
-        fileName:"",
+        user_name: "hungnt"
     };
 
     var validate = {
@@ -477,7 +476,7 @@ $(document).ready(function () {
         audioInfo.inputType = $('#detailsInforModal #inputType').val();
         audioInfo.name = $('#detailsInforModal #bookName').val();
         if (audioInfo.name == "" || audioInfo.name == undefined) audioInfo.name = "myAudioBook";
-        audioInfo.author = localStorage.username;
+        audioInfo.author = $('#detailsInforModal #author').val();
         $('.section-studio .output .details .book-name').text("- Tên sách: " + audioInfo.name);
         $('.section-studio .output .details .author').text("- Tác giả: " + audioInfo.author);
         console.log(audioInfo);
@@ -562,7 +561,7 @@ var swiper1 = new Swiper(".current-book-slides ", {
 });
 
 var swiper3 = new Swiper(".trend-slides", {
-    slidesPerView: 4,
+    slidesPerView: 6,
     spaceBetween: 30,
     pagination: {
         el: ".swiper-pagination",
