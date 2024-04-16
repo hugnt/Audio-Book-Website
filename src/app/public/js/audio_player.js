@@ -92,7 +92,7 @@ $(function () {
             ten_sach: book.name,
             ten_tac_gia: book.author_name,
             id: "_" + book.id,
-            bia_sach: `<img src="${book.images}" id="${book.id}" class="active" >`,
+            bia_sach: `<img src="${book.images}" id="_${book.id}" class="active" >`,
             audio: book.audio
         }
         handleAddtoPlayer(book);
@@ -113,7 +113,7 @@ $(function () {
                     ten_sach: item[0].name,
                     ten_tac_gia: item[0].author_name,
                     id: "_" + item[0].id,
-                    bia_sach: `<img src="/img/covers/${item[0].image}" id="${item[0].id}" class="active" >`,
+                    bia_sach: `<img src="/img/covers/${item[0].image}" id="_${item[0].id}" class="active" >`,
                     audio: "../audio/" + item[0].audio_fileName
                 }
                 handleAddtoPlayer(book);
