@@ -12,13 +12,18 @@
             <ul class="list-books d-flex swiper-wrapper">
                 {{#each books}}
                 <li class="book-item swiper-slide " data-book="">
-                    <div class="img-box"><img src="/img/covers/{{this.cover_image}}" alt="" class="w-100"></div>
+                    {{#if this.images}}
+                        <div class="img-box"><img src="{{this.images}}" alt="" class="w-100"></div>
+                    {{else}}
+                        <a href="http://localhost:8888/bookmark_reading/{{this.id}}">
+                        <div class="img-box"><img src="/img/covers/{{this.image}}" alt="" class="w-100"></div>
+                    {{/if}}
+                    </a>
                 </li>
                 {{/each}}
             </ul>
             <div class="swiper-button-next" style="color: #E50914 ;"></div>
             <div class="swiper-button-prev" style="color: #E50914 ;"></div>
-            <div class="swiper-pagination" style="color: #E50914 ;"></div>
         </div>
 
 
@@ -46,10 +51,14 @@
                                         ngữ:
                                         Tiếng Việt</span>
                                 </div>
-                                <p class="summary">{{this.description}}</p>
+                                <p class="summary" onclick="(() => { var ele = this; ele.classList.toggle('expanded'); })()">
+                                    {{this.description}}
+                                </p>
                                 <div class="btn-action">
-                                    <button class="btn-read"><i class="fa-solid fa-book-open-reader"></i>Đọc
-                                        ngay</button>
+                                    <a href="http://localhost:8888/bookmark_reading/{{this.id}}">
+                                        <button class="btn-read"><i class="fa-solid fa-book-open-reader"></i>Đọc
+                                            ngay</button>
+                                    </a>
                                     <button class="btn-add"><i class="fa-solid fa-plus"></i>Thêm vào danh sách</button>
                                     <button class="btn-like"><i class="fa-solid fa-thumbs-up"></i></button>
                                 </div>
@@ -118,17 +127,21 @@
         <div class="book-lists d-flex">
             {{#each books}}
             <div class="book-item" data-book="">
-                <div class="img-box">
-                    <img src="/img/covers/{{this.cover_image}}" alt="" class="book-img">
-                </div>
-                <div class="btn-listen" data-id="{{this.id}}">
-                    <span class="fa-regular fa-circle-play"></span>
-                </div>
+                {{#if this.images}}
+                    <div class="img-box"><img src="{{this.images}}" alt="" class="w-100"></div>
+                    <div class="btn-listen" data-api="{{json this}}">
+                {{else}}
+                    <div class="img-box">
+                        <img src="/img/covers/{{this.image}}" alt="" class="book-img">
+                    </div>
+                    <div class="btn-listen" data-id="{{this.id}}">
+                {{/if}}
+                        <span class="fa-regular fa-circle-play"></span>
+                    </div>
                 <span class="author desc">{{this.author_name}}</span>
                 <span class="name main-title">{{this.name}}</span>
                 <span class="icon-star fa-regular fa-star-half-stroke">
-                    <span class="desc">{{this.ty_le_sao}}</span>
-                    <span class="rate desc">{{this.rate}}k Đánh giá</span>
+                    <span class="rate desc">{{this.likes}}k Likes</span>
                 </span>
             </div>
             {{/each}}

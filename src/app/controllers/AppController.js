@@ -1,6 +1,7 @@
 
 const {Book} = require('../models/Book');
 const {Author} = require('../models/Author');
+const {spotifyApi} = require('../../util/spotifyAPI')
 class AppController {
 
     home(req, res, next) {
@@ -33,16 +34,19 @@ class AppController {
     bookmark_reading(req, res) {
         res.render('bookmark_reading');
     };
-    
-    bookmark(req, res, next) {
-        Promise.all([Book.getBooks({}), Author.getAuthors({})])
-        .then((results)=>{
+
+    async bookmark(req, res, next) {
+        try {
+            await spotifyApi.getAudiobooks();
+            let data = await Book.getBooks({})
+            let books = data.concat(spotifyApi.audiobooks)
             res.render('bookmark',{
-                books:results[0],
-                authors: results[1]
-            });
-        })
-        .catch(next); 
+                books
+            });    
+        } catch (error) {
+            console.log(error)
+            next()
+        }
     };
 
     bookstore(req, res, next) {
@@ -55,7 +59,7 @@ class AppController {
             })
             .catch(next); 
     }
-// 
+
     challenge(req, res) {
         res.render('challenge');
     };
@@ -64,14 +68,18 @@ class AppController {
         res.render('community');
     };
 
-    audio_book(req, res, next) {
-        Book.getBooks({})
-        .then((books)=>{
+    async audio_book(req, res, next) {
+        try {
+            await spotifyApi.getAudiobooks();
+            let data = await Book.getBooks({})
+            let books = data.concat(spotifyApi.audiobooks)
             res.render('audio_book',{
                 books
-            });
-        })
-        .catch(next); 
+            });    
+        } catch (error) {
+            console.log(error)
+            next()
+        }
     };
 
     studio(req, res, next) {
