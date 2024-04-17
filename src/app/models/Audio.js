@@ -2,11 +2,17 @@
 const querySelectAll = `SELECT book.*, 
                                 author.name AS author_name, 
                                 bookcategory.name AS category_name,
-                                audio.fileName AS audio_fileName
+                                audio.fileName AS audio_fileName,
+                                audio.urlLink AS audio_urlLink,
+                                audio.voice AS audio_voice,
+                                audio.speed AS audio_speed,
+                                audio.inputType AS audio_inputType,
+                                account.username AS username
                         FROM book
-                        JOIN bookcategory ON book.categoryId = bookcategory.id
-                        JOIN author ON book.authorId = author.id
-                        JOIN audio ON book.audioId = audio.id`;
+                        LEFT JOIN bookcategory ON book.categoryId = bookcategory.id
+                        LEFT JOIN author ON book.authorId = author.id
+                        LEFT JOIN audio ON book.audioId = audio.id
+                        LEFT JOIN account ON book.accountId = account.id`;
 const { excuteQuery } = require('../../util/mySql')
 
 

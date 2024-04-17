@@ -4,8 +4,9 @@ const web = express();
 const db = require('./config/db/db');
 const route = require('./routes/index.router');
 const {engine} = require('express-handlebars');
+var cors = require('cors')
 
-
+web.use(cors())
 
 //template engines
 web.engine('.hbs', engine({

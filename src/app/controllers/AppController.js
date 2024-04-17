@@ -92,6 +92,7 @@ class AppController {
         .catch(next); 
     };
 
+
 }
 
 module.exports = new AppController;

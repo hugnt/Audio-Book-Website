@@ -1,6 +1,6 @@
-// const { text } = require("body-parser");
+import * as API from './api/ajax_config.js';
 import Crunker from 'https://unpkg.com/crunker@latest/dist/crunker.esm.js';
-
+pdfjsLib.GlobalWorkerOptions.workerSrc ="/js/lib/pdf.worker.min.js";
 $(document).ready(function () {
     var audioOutput = $(".section-studio .output .audio-res audio");
     const fileInput = $(".section-studio .input .custom-file-input");
@@ -28,13 +28,15 @@ $(document).ready(function () {
         url: "",
         author: localStorage.username,
         cover: "null.png",
-        speed: "",
+        speed: 0,
         voice: "",
         inputType: "",
         user_name: localStorage.username,
         fileName:"",
+        urlLink:"",
     };
 
+    
     var validate = {
         isInput: false,
         isSetVoice: false,
@@ -156,7 +158,7 @@ $(document).ready(function () {
             $('#detailsInforModal #inputType').val(typeInput);
             $('#detailsInforModal #voice').val(voice);
             $('#detailsInforModal #speed').val(speed);
-
+            audioInfo.inputType = typeInput;
 
             //spliting content
             var words = content.split(' ');
@@ -238,6 +240,7 @@ $(document).ready(function () {
             $('#detailsInforModal #inputType').val(typeInput);
             $('#detailsInforModal #voice').val(voice);
             $('#detailsInforModal #speed').val(speed);
+            audioInfo.inputType = typeInput;
 
 
             //spliting content
@@ -283,6 +286,7 @@ $(document).ready(function () {
                         audioUrls[index] = response.audioUrl;
                         if (!audioUrls.includes(undefined)) {
                             console.log("OKOK");
+                            audioInfo.urlLink = response.audioUrl;
                             concatAudios(audioUrls);
                         }
                     }
@@ -363,9 +367,10 @@ $(document).ready(function () {
             }
             return text;
         } catch (error) {
-            throw err;
+            throw error;
         }
     }
+    
     async function getContent() {
         try {
             var contentType = $("input[name='upload']:checked");
@@ -374,7 +379,7 @@ $(document).ready(function () {
                 var fileName = fileInput.prop("files")[0].name;
                 formData.append("uploadFile", fileInput.prop("files")[0]);
                 // console.log(formData);
-                await $.ajax({
+                $.ajax({
                     url: `/uploadFile/${audioInfo.user_name}`,
                     type: 'POST',
                     data: formData,
@@ -389,6 +394,7 @@ $(document).ready(function () {
                 });
                 const url = `../clientFiles/${audioInfo.user_name}/${fileName}`;
                 const text = await convertPDFtoText(url);
+                audioInfo.fileName = fileName;
                 return text;
             }
             else if (contentType.val() == 2) {
@@ -417,8 +423,8 @@ $(document).ready(function () {
             audioInfo.author = "hungnt";
             audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
             // console.log(output.blob);
-            console.log(output.url);
-
+            console.log("final audio: ", output.url);
+            
             setPending(false);
             setLoading(false);
             setInput(true);
@@ -472,7 +478,7 @@ $(document).ready(function () {
 
 
     //POPUP Handler
-    $("#detailsInforModal #saveDetails").click(function (e) {
+    $("#detailsInforModal #saveDetails").click(async function (e) {
         e.preventDefault();
         audioInfo.inputType = $('#detailsInforModal #inputType').val();
         audioInfo.name = $('#detailsInforModal #bookName').val();
@@ -481,6 +487,24 @@ $(document).ready(function () {
         $('.section-studio .output .details .book-name').text("- Tên sách: " + audioInfo.name);
         $('.section-studio .output .details .author').text("- Tác giả: " + audioInfo.author);
         console.log(audioInfo);
+        var bookCreate = {
+            name:audioInfo.name,
+            fileName:audioInfo.fileName,
+            image:"null.png",
+            username:localStorage.username,
+            urlLink:audioInfo.urlLink,
+            voice: audioInfo.voice,
+            speed: audioInfo.speed,
+            inputType: audioInfo.inputType
+        }
+        try {
+            var reqAudio = await API.postData('book/add',bookCreate);
+            console.log(reqAudio);
+            window.location.href(`/profile/${localStorage.username}`);
+        } catch (error) {
+            console.log(error);
+        }
+    
     });
 
 

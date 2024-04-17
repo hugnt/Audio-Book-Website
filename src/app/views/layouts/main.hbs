@@ -29,6 +29,11 @@
         integrity="sha512-AODL7idgffQeNsYdTzut09nz9AINcjhj4jHD72HcLirsidbC8tz+dof7gceOCQD8WskeuRFfJ9CsgZTHlMiOYg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script>
+         if(localStorage.username==null&&localStorage.accessToken==null){
+                window.location.href="/login"
+            }
+    </script>
 </head>
 
 <body>

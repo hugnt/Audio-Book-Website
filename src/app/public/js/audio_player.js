@@ -109,12 +109,23 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (item) {
+                console.log("selected book:", item);
+                var audio_fileName = item[0].audio_fileName;
+                var audio_urlLink= item[0].audio_urlLink;
+                var audioPlay = "";
+                if(audio_fileName==null||audio_fileName==""||audio_fileName==undefined){
+                    audioPlay = audio_urlLink;
+                }
+                else{
+                    audioPlay = "../audio/" + audio_fileName;
+                }
+                
                 var book = {
                     ten_sach: item[0].name,
                     ten_tac_gia: item[0].author_name,
                     id: "_" + item[0].id,
                     bia_sach: `<img src="/img/covers/${item[0].image}" id="_${item[0].id}" class="active" >`,
-                    audio: "../audio/" + item[0].audio_fileName
+                    audio: audioPlay
                 }
                 handleAddtoPlayer(book);
 

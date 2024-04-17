@@ -14,7 +14,6 @@ const fs = require('fs');
 
 const storeController = require('../app/controllers/StoreController');
 router.get('/bookstore/:id', storeController.getById);
-
 router.get('/login', appController.signup);
 router.get('/', appController.home);
 router.get('/home', appController.home);
@@ -119,5 +118,70 @@ try {
     }
 });
 router.get('/profile/:username', userController.openProfile);
+
+
+//BOOK
+router.get('/book/check', bookController.getBookId);
+router.post('/book/add', async (req, res) => {
+    var isAddedSuccess = await bookController.createBook(req.body);
+        if (isAddedSuccess) {
+            res.status(200).send("Created book successfully");
+        }
+        else{
+            res.status(500).send({ error: 'An error occurred' });
+        }
+});
+router.get('/book/:id', async (req, res) => {
+    var selectedBook = await bookController.getBookById(req.params.id);
+    console.log("SELECTED BOOK:", selectedBook);
+    if (selectedBook!=null) {
+        res.status(200).send(selectedBook);
+    }
+    else{
+        res.status(500).send(null);
+    }
+    
+});
+router.post('/book/update/:id', async (req, res) => {
+    var isUpdatedSuccess = await bookController.updateBook(req.params.id, req.body);
+        if (isUpdatedSuccess) {
+            res.status(200).send("Updated book successfully");
+        }
+        else{
+            res.status(500).send({ error: 'An error occurred' });
+        }
+});
+router.delete('/book/:id', async (req, res) => {
+    try {
+        var checkDelete = await bookController.deleteBook(req.params.id);
+        if(checkDelete) res.status(200).send("Deleted book successfully");
+        else res.status(500).send({ error: 'An error occurred' });
+    } catch (error) {
+        res.status(500).send({ error: 'An error occurred' });
+    }
+});
+
+router.post('/book/upload', function (req, res) {
+    // Lấy file từ request
+    let uploadedFile = req.files.uploadFile;
+
+    // Xác định đường dẫn tới thư mục clientFiles
+    const UPLOADS_DIR = path.join(__dirname, '..', 'app', 'public', 'img', 'covers');
+
+    // Tạo thư mục clientFiles/user_name nếu nó chưa tồn tại
+    if (!fs.existsSync(UPLOADS_DIR)) {
+        fs.mkdirSync(UPLOADS_DIR);
+    }
+
+    // Lưu file vào thư mục clientFiles/user_name
+    uploadedFile.mv(path.join(UPLOADS_DIR, uploadedFile.name), function (err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        //router.get('/bookstore/:id', storeController.getById);
+
+        res.send('Tải tệp tin lên thành công');
+    });
+});
 
 module.exports = router

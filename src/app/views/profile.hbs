@@ -38,15 +38,20 @@
                 <div class="list-books swiper-wrapper">
                     {{#each books}}
                     <div class="book-item swiper-slide">
-                        <div class="book-cover">
-                            <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100">
+                        <div class="book-cover"  style="overflow: hidden;">
+                            <img src="/img/covers/{{this.image}}" alt="" class="w-100 h-100 object-fit-contain">        
                             <span class="rank">
                                 <span class="fa-solid fa-ranking-star"></span>
                                 <span>{{add1index @index 1}}</span>
                             </span>
-                            <span class="action-more fa-solid fa-ellipsis">
+                            <span data-id="{{this.id}}"
+                                data-toggle="modal"
+                                data-target="#detailsInforModal"
+                             class="action-more fa-solid fa-ellipsis">
                             </span>
-                            <span class="action-listen fa-regular fa-circle-play" data-id="{{this.id}}">
+                            <span class="action-listen fa-regular fa-circle-play"  
+                               
+                            data-id="{{this.id}}">
                             </span>
                         </div>
                         <div class="book-name">{{this.name}}</div>
@@ -184,7 +189,7 @@
                 <div class="author italic-desc">
                     - Tác giả: user
                 </div>
-                <button type="button" class="btn btn-info mt-3" data-toggle="modal"
+                <button type="button" class="btn btn-info mt-3" id="btnFillInfo" data-toggle="modal"
                     data-target="#detailsInforModal">Cập nhật thông tin sách</button>
                 {{!-- <a href="#" style="color:#c8b197; text-decoration: underline;">Nhập thông tin chi tiết</a> --}}
             </div>
@@ -230,7 +235,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="detailsInforModal" tabindex="-1" role="dialog" aria-labelledby="detailsInforModalTitle"
-    aria-hidden="true">
+    aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -240,6 +245,16 @@
                 </button>
             </div>
             <div class="modal-body row">
+                <div class="form-group col-12" style="margin-bottom: 2rem;">
+                    <label for="imgInp" style="color:#000">Ảnh bìa</label>
+                    <div class="d-flex align-items-center">
+                        <input accept="image/*" type="file"  id="imgInp" class="w-50 form-control" style="margin-bottom: 1rem;margin-right: 3rem;"/>
+                        <div class="w-25" style="height:10rem;">
+                            <img id="blah" src="/img/covers/null.png" alt="your image" class="w-100 h-100 object-fit-cover"/>
+                        </div>
+                    </div>
+                </div>
+               
                 <div class="form-group col-md-3">
                     <label for="inputType" style="color:#000">Kiểu đầu vào</label>
                     <input type="text" class="form-control" id="inputType" value="Nhập văn bản" readonly/>
@@ -258,12 +273,21 @@
                 </div>
                 <div class="form-group col-md-10">
                     <label for="author" style="color:#000">Tên tác giả</label>
-                    <input type="text" class="form-control" id="author" placeholder="user_name" />
+                    <input type="text" class="form-control" id="author" placeholder="user_name" readonly/>
+                </div>
+                <div class="form-group col-md-10">
+                    <label for="urlLink" style="color:#000">Download link</label>
+                    <input type="text" class="form-control" id="urlLink" placeholder="link url" readonly/>
+                </div>
+                <div class="form-group col-md-10 d-none">
+                    <input type="text" class="form-control" id="bookID" placeholder="link url" readonly/>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="saveDetails">Lưu thông tin</button>
+                 <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnDeleteBook">Xóa</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="btnAddBook">Thêm</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal" id="saveDetails">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -340,14 +364,13 @@
       import Crunker from 'https://unpkg.com/crunker@latest/dist/crunker.esm.js';
 </script> --}}
 {{!-- <script type="module" src="https://unpkg.com/crunker@latest/dist/crunker.esm.js"></script> --}}
+<script src="/js/lib/pdf.min.js"></script>
 <script type="module" src="/js/audio_book_profile.js"></script>
 <script src="/js/audio_player.js"></script>
 
 
 
-
 <!-- tranfer pdf to text lib -->
-<script src="https://unpkg.com/pdfjs-dist/build/pdf.min.js"></script>
 
 {{!-- concat audio  --}}
 

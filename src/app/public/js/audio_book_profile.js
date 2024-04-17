@@ -1,6 +1,6 @@
-// const { text } = require("body-parser");
+import * as API from './api/ajax_config.js';
 import Crunker from 'https://unpkg.com/crunker@latest/dist/crunker.esm.js';
-
+pdfjsLib.GlobalWorkerOptions.workerSrc ="/js/lib/pdf.worker.min.js";
 $(document).ready(function () {
     var audioOutput = $(".section-studio .output .audio-res audio");
     const fileInput = $(".section-studio .input .custom-file-input");
@@ -21,19 +21,22 @@ $(document).ready(function () {
     //     'https://file01.fpt.ai/text2speech-v5/short/2023-05-02/ed5f0ad7787fd444ea7443edba94bd31.mp3',
     //     'https://file01.fpt.ai/text2speech-v5/short/2023-05-02/4e2df9ed181e9b3214803d8f96338791.mp3'
     // ];
-
+   
     var audioInfo = {
         id: "uaid_0",
         name: "My audio book",
         url: "",
-        author: "Nam Nguyễn",
+        author: localStorage.username,
         cover: "null.png",
-        speed: "",
+        speed: 0,
         voice: "",
         inputType: "",
-        user_name: "hungnt"
+        user_name: localStorage.username,
+        fileName:"",
+        urlLink:"",
     };
 
+    
     var validate = {
         isInput: false,
         isSetVoice: false,
@@ -155,7 +158,7 @@ $(document).ready(function () {
             $('#detailsInforModal #inputType').val(typeInput);
             $('#detailsInforModal #voice').val(voice);
             $('#detailsInforModal #speed').val(speed);
-
+            audioInfo.inputType = typeInput;
 
             //spliting content
             var words = content.split(' ');
@@ -237,7 +240,7 @@ $(document).ready(function () {
             $('#detailsInforModal #inputType').val(typeInput);
             $('#detailsInforModal #voice').val(voice);
             $('#detailsInforModal #speed').val(speed);
-
+            audioInfo.inputType = typeInput;
 
             //spliting content
             var words = content.split(' ');
@@ -282,6 +285,7 @@ $(document).ready(function () {
                         audioUrls[index] = response.audioUrl;
                         if (!audioUrls.includes(undefined)) {
                             console.log("OKOK");
+                            audioInfo.urlLink = response.audioUrl;
                             concatAudios(audioUrls);
                         }
                     }
@@ -362,9 +366,10 @@ $(document).ready(function () {
             }
             return text;
         } catch (error) {
-            throw err;
+            throw error;
         }
     }
+    
     async function getContent() {
         try {
             var contentType = $("input[name='upload']:checked");
@@ -373,7 +378,7 @@ $(document).ready(function () {
                 var fileName = fileInput.prop("files")[0].name;
                 formData.append("uploadFile", fileInput.prop("files")[0]);
                 // console.log(formData);
-                await $.ajax({
+                $.ajax({
                     url: `/uploadFile/${audioInfo.user_name}`,
                     type: 'POST',
                     data: formData,
@@ -388,6 +393,7 @@ $(document).ready(function () {
                 });
                 const url = `../clientFiles/${audioInfo.user_name}/${fileName}`;
                 const text = await convertPDFtoText(url);
+                audioInfo.fileName = fileName;
                 return text;
             }
             else if (contentType.val() == 2) {
@@ -416,8 +422,8 @@ $(document).ready(function () {
             audioInfo.author = "hungnt";
             audioInfo.id = "uaid_" + Date.now().toString(36) + Math.random().toString(36).substr(2);
             // console.log(output.blob);
-            console.log(output.url);
-
+            console.log("final audio: ", output.url);
+            
             setPending(false);
             setLoading(false);
             setInput(true);
@@ -471,16 +477,170 @@ $(document).ready(function () {
 
 
     //POPUP Handler
-    $("#detailsInforModal #saveDetails").click(function (e) {
-        e.preventDefault();
-        audioInfo.inputType = $('#detailsInforModal #inputType').val();
-        audioInfo.name = $('#detailsInforModal #bookName').val();
+    $(".action-more").click( async function(){
+        $("#btnDeleteBook").show();
+        $("#saveDetails").show();
+        $("#btnAddBook").hide();
+        const id = $(this).data("id");
+        var selectedBook = await API.getData(`book/${id}`);
+        if(selectedBook == null){
+            alert("This book is null");
+            return;
+        }
+        setBookInfor(selectedBook);
+
+    });
+    $("#btnFillInfo").click(function(){
+        $("#btnAddBook").show();
+        $("#btnDeleteBook").hide();
+        $("#saveDetails").hide();
+        
         if (audioInfo.name == "" || audioInfo.name == undefined) audioInfo.name = "myAudioBook";
-        audioInfo.author = $('#detailsInforModal #author').val();
+        var bookInfor = {
+            audio_inputType: audioInfo.inputType,
+            name:audioInfo.name,
+            image:audioInfo.cover,
+            username:localStorage.username,
+            audio_urlLink:audioInfo.urlLink,
+            audio_voice: audioInfo.voice,
+            audio_speed: audioInfo.speed,  
+        }
+        setBookInfor(bookInfor)
+    })
+    $("#btnDeleteBook").click(async function(){
+        const result = confirm("Bạn có chắc chắn muốn xóa sách?")
+        if (result) {
+            const id = $("#bookID").val();
+            try {
+                await API.deleteData(`book/${id}`);
+                window.location.reload();
+            } catch (error) {
+                console.log(error)
+                alert("Xóa sách thất bại!");
+                
+            }
+        } 
+    })
+
+    //ADD
+    $("#detailsInforModal #btnAddBook").click(async function (e) {
+        e.preventDefault();
+        var bookInfo = getBookInfo();
+        const [file] = imgInp.files
+        if(file){
+            var formData = new FormData();
+            //var fileName = file.name;
+            formData.append("uploadFile", file);
+            // console.log(formData);
+            await $.ajax({
+                url: `/book/upload`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("Fail to upload image to server");
+                    return;
+                }
+            });
+        }
+        try {
+            var reqAudio = await API.postData('book/add',bookInfo);
+            
+            console.log(reqAudio);
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
         $('.section-studio .output .details .book-name').text("- Tên sách: " + audioInfo.name);
         $('.section-studio .output .details .author').text("- Tác giả: " + audioInfo.author);
-        console.log(audioInfo);
     });
+
+    //UPDATE
+    $("#detailsInforModal #saveDetails").click(async function (e) {
+        e.preventDefault();
+        var bookInfo = getBookInfo();
+        if(bookInfo.id == -1){
+            alert("Something went wrong!");
+        }
+        const [file] = imgInp.files
+        if(file){
+            var formData = new FormData();
+            //var fileName = file.name;
+            formData.append("uploadFile", file);
+            // console.log(formData);
+            await $.ajax({
+                url: `/book/upload`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("Fail to upload image to server");
+                    return;
+                }
+            });
+        }
+        try {
+            var reqUpdatedAudio = await API.postData(`book/update/${bookInfo.id}`,bookInfo);
+            window.location.reload();
+            console.log(reqUpdatedAudio);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+          blah.src = URL.createObjectURL(file)
+          audioInfo.cover = file.name
+          console.log(audioInfo.cover)
+        }
+        else{
+            audioInfo.cover = "null.png";
+        }
+      }
+
+    function getBookInfo(){
+        var imgName = "null.png";
+        if(blah.src!="") imgName = blah.src.split("/").pop();
+        const [file] = imgInp.files;
+        if (file) {
+            imgName = file.name
+        }
+        
+        return {
+            id:$("#bookID").val()?$("#bookID").val():-1,
+            name:$("#bookName").val(),
+            fileName:audioInfo.fileName,
+            image:imgName,
+            username:$("#author").val(),
+            urlLink:$("#urlLink").val(),
+            voice: $("#voice").val(),
+            speed: $("#speed").val(),
+            inputType: $("#inputType").val()
+        }
+    }
+
+    function setBookInfor(bookInfo){
+        $("#bookName").val(bookInfo.name);
+        $("#inputType").val(bookInfo.audio_inputType);
+        blah.src = `/img/covers/${bookInfo.image}`;
+        $("#author").val(bookInfo.username);
+        $("#urlLink").val(bookInfo.audio_urlLink);
+        $("#voice").val(bookInfo.audio_voice);
+        $("#speed").val(bookInfo.audio_speed);
+        $("#bookID").val(bookInfo.id);
+    }
 
 
     function setLoading(on) {
