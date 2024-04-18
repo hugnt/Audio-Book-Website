@@ -6,6 +6,8 @@ const appController = require('../app/controllers/AppController');
 const audioController = require('../app/controllers/AudioController');
 const bookController = require('../app/controllers/BookController');
 const userController = require('../app/controllers/UserController');
+const speechController = require('../app/controllers/SpeechController');
+
 const fileUpload = require('express-fileupload');
 router.use(fileUpload());
 router.use(bodyParser.json());
@@ -27,7 +29,7 @@ router.get('/bookstore', appController.bookstore);
 router.get('/challenge', appController.challenge);
 router.get('/community', appController.community);
 router.get('/audio_book', appController.audio_book);
-router.get('/studio', appController.audio_book);
+router.get('/studio', appController.studio);
 
 router.get('/audio_book/:id', audioController.getById);
 router.post('/audio_book/api/:user_name/:audio_id', audioController.getByAPI);
@@ -183,5 +185,10 @@ router.post('/book/upload', function (req, res) {
         res.send('Tải tệp tin lên thành công');
     });
 });
+
+//router.get('/text_book/test', audioController.getTextByAPI);
+//AUDIO TO TEXT
+router.post('/convert', speechController.convertAudioToText);
+
 
 module.exports = router
