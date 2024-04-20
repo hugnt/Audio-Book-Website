@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const audioOutput = $(".section-studio .output .audio-res audio");
+  const audioOutput = $(".section-studio .input audio");
   const audioElement = audioOutput[0];
   let isPlaying = false;
 
